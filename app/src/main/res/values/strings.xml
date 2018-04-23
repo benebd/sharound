@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">Share around</string>
+
+    <string name="value_any_category">All item</string>
+    <string name="value_any_city">Anywhere</string>
+    <string name="value_any_price">Any price</string>
+
+    <string name="add_item">ADD ITEM</string>
+
+    <string name="price_1">$</string>
+    <string name="price_2">$$</string>
+    <string name="price_3">$$$</string>
+
+    <string name="label_category">Category</string>
+    <string name="label_city">Location</string>
+    <string name="label_price">Price</string>
+    <string name="label_sort_by">Sort By</string>
+
+    <string name="fmt_num_ratings" translatable="false">(%d)</string>
+    <string name="all_restaurants">All Item</string>
+    <string name="header_filters">Filter</string>
+    <string name="search">Search</string>
+
+    <string name="sort_by_rating">Sort by Rating</string>
+    <string name="sort_by_popularity">Sort by Popularity</string>
+    <string name="sort_by_price">Sort by Price</string>
+
+    <string name="sorted_by_rating">sorted by rating</string>
+    <string name="sorted_by_price">sorted by price</string>
+    <string name="sorted_by_popularity">sorted by popularity</string>
+
+    <string name="add_random_items">Add Random Items</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="divider_bullet">•</string>
+    <string name="apply">Apply</string>
+    <string name="cancel">Cancel</string>
+    <string name="message_no_results">Oops, couldn\'t find any results\nthat matched your filter</string>
+    <string name="message_no_reviews">Be the first to leave a review!</string>
+    <string name="hint_review">How was your experience?</string>
+    <string name="submit">Submit</string>
+    <string name="filter_add_review">Add review</string>
+
+    <string name="title_sign_in_error">Sign In Error</string>
+    <string name="message_no_network">No network connection.</string>
+    <string name="message_unknown">Unknown error.</string>
+    <string name="option_retry">Retry</string>
+    <string name="option_exit">Exit</string>
+
+    <!-- Types of food I could think of in 5 minutes -->
+    <string-array name="categories">
+        <item>@string/value_any_category</item>
+
+        <item>Accessories</item>
+        <item>Computer</item>
+        <item>Camera</item>
+        <item>Book</item>
+    </string-array>
+    ite
+
+    <!-- 18  HK -->
+    <string-array name="cities">
+        <item>@string/value_any_city</item>
+
+        <item>Central and Western</item>
+        <item>Wan Chai</item>
+        <item>Eastern </item>
+        <item>Southern</item>
+        <item>Yau Tsim Mong</item>
+        <item>Sham Shui Po </item>
+        <item>Kowloon City </item>
+        <item>Wong Tai Sin </item>
+        <item>Kwun Tong</item>
+        <item>Kwai Tsing</item>
+        <item>Tsuen Wan</item>
+        <item>Tuen Mun</item>
+        <item>Yuen Long</item>
+        <item>North</item>
+        <item>Tai Po</item>
+        <item>Sha Tin</item>
+        <item>Sai Kung</item>
+        <item>Islands</item>
+    </string-array>
+
+    <!-- Price filters -->
+    <string-array name="prices">
+        <item>@string/value_any_price</item>
+
+        <item>@string/price_1</item>
+        <item>@string/price_2</item>
+        <item>@string/price_3</item>
+    </string-array>
+
+    <!-- Ways you can sort restaurants -->
+    <string-array name="sort_by">
+        <item>@string/sort_by_rating</item>
+        <item>@string/sort_by_popularity</item>
+        <item>@string/sort_by_price</item>
+    </string-array>
+    <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="dialog_change_photo">ChangePhotoDialog</string>
+
+    <string name="progress_uploading">Uploading…</string>
+    <string name="upload_success">Upload finished</string>
+    <string name="upload_failure">Upload failed</string>\
+</resources>

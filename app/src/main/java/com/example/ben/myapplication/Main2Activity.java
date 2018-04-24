@@ -27,18 +27,16 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
 
 public class Main2Activity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener{
     private static final String TAG = "Main2Activity";
@@ -126,6 +124,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mStorageRef = FirebaseStorage.getInstance().getReference();
         setSupportActionBar(toolbar);
         mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -203,10 +202,10 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         item.setName(mname.getText().toString());
         item.setLocation(mcity.getText().toString());
         item.setCategory(mcat.getText().toString());
-       // item.setPhoto(mDownloadUrl.toString());
+        item.setPhoto(mDownloadUrl.toString());
         item.setPrice(1);
         item.setNumRatings(1);
-        //item.setUsername();
+        //item.setUsername( FirebaseAuth.getInstance().getCurrentUser().toString());
         //item.setUserid();
         //item.setPrice(Integer.parseInt(mprice.toString()));
         //item.setNumRatings(Integer.parseInt(mrating.toString()));
@@ -326,7 +325,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                 Log.d(TAG, "uploadFromUri:onSuccess"+downloadUri);
                 // [START_EXCLUDE]
 
-                mDownloadUrl=downloadUri;
+               mDownloadUrl=downloadUri;
 
 
                 // [END_EXCLUDE]

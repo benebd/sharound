@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.ben.myapplication.model.Item;
 import com.example.ben.myapplication.viewmodel.MainActivityViewModel;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,6 +36,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 public class Main2Activity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener{
@@ -56,6 +59,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
     private Uri mDownloadUrl;
     private static final String KEY_FILE_URI = "key_file_uri";
     private static final String KEY_DOWNLOAD_URL = "key_download_url";
+    private StorageReference mStorageRef;
     @Override
     public void getImagePath(Uri imagePath) {
         if( !imagePath.toString().equals("")){
@@ -68,7 +72,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                     .resize(100, 100)
                     .centerCrop()
                     .into(profileImage);
-            uploadFromUri(mSelectedImageUri);
+            uploadFromUrit(mSelectedImageUri);
 
         }
 
@@ -86,7 +90,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                     .resize(100, 100)
                     .centerCrop()
                     .into(profileImage);
-            uploadFromUri(mTakeImageUri);
+            uploadFromUrit(mTakeImageUri);
         }
 
     }
@@ -295,6 +299,40 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         //updateUI(mAuth.getCurrentUser());
     }
 
+    private void uploadFromUrit(final Uri fileUri) {
+        Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
+        // [START_EXCLUDE]
+
+
+        // [END_EXCLUDE]
+
+        // [START get_child_ref]
+        // Get a reference to store file at photos/<FILENAME>.jpg
+        final StorageReference photoRef = mStorageRef.child("photos")
+                .child(fileUri.getLastPathSegment());
+        // [END get_child_ref]
+
+        // Upload file to Firebase Storage
+        Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
+        photoRef.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // Upload succeeded
+                Log.d(TAG, "uploadFromUri:onSuccess");
+
+                // Get the public download URL
+                Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                Log.d(TAG, "uploadFromUri:onSuccess"+downloadUri);
+                // [START_EXCLUDE]
+
+                mDownloadUrl=downloadUri;
+
+
+                // [END_EXCLUDE]
+            }
+        });
+
+    }
     }
 

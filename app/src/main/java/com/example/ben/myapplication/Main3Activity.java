@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.ben.myapplication.model.Item;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +30,9 @@ public class Main3Activity extends AppCompatActivity {
     private static final String TAG = "Main3Activity";
     public static final String URI_MESSAGE = "message.uri";
     public static final String UPLOAD_URI = "URI";
-    public String string;
+    public String uploadUri;
+    public String takeUri;
+    public String selectUri;
     private FirebaseFirestore mFirestore;
     private DocumentReference mRestaurantRef;
     Item item = new Item();
@@ -105,13 +108,31 @@ public class Main3Activity extends AppCompatActivity {
         // Bundle extras = getIntent().getExtras();
         // fileUri=Uri.parse(extras.getString("uri"));
         Intent intent = getIntent();
-        string = intent.getStringExtra("uri");
+        uploadUri = intent.getStringExtra("uri");
+        takeUri = intent.getStringExtra("takeuri");
+        selectUri =intent.getStringExtra("selecturi");
+        Log.d(TAG,"Main3Activitys"+selectUri);
+        Log.d(TAG,"Main3Activityt"+takeUri);
         //Intent intent = new Intent();
         // Uri fileUri = intent.getParcelableExtra(UPLOAD_URI);
         // intent,getString
-        Log.d(TAG, "Main3activity" + string);
+        Log.d(TAG, "Main3activity" + uploadUri);
+        if(selectUri!=null){
+               // Uri.parse(selectUri);
+                        Picasso.get()
+                                .load(Uri.parse(selectUri))
+                                .resize(100, 100)
+                                .centerCrop()
+                                .into(profileImage);
+        }else if(takeUri != null){
+               // Uri.parse(takeUri);
+            Picasso.get()
+                    .load(Uri.parse(takeUri))
+                    .resize(100, 100)
+                    .centerCrop()
+                    .into(profileImage);
+        }
     }
-
     @OnClick(R.id.add)
     public void onViewClicked() {
         addItem();
@@ -119,7 +140,7 @@ public class Main3Activity extends AppCompatActivity {
 
     public void addItem() {
 
-     Log.d(TAG,"M3additem"+string);
+     Log.d(TAG,"M3additem"+uploadUri);
 
         mRestaurantRef = mFirestore.collection("items").document();
 
@@ -127,7 +148,7 @@ public class Main3Activity extends AppCompatActivity {
         item.setName(inname.getText().toString());
         item.setLocation(incity.getText().toString());
         item.setCategory(incat.getText().toString());
-        item.setPhoto(string);
+        item.setPhoto(uploadUri);
         item.setPrice(1);
         item.setNumRatings(1);
         //item.setUsername( FirebaseAuth.getInstance().getCurrentUser().toString());
@@ -178,7 +199,7 @@ public class Main3Activity extends AppCompatActivity {
         Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
 
 
-        // finish();
+         finish();
 
 
 

@@ -1,5 +1,6 @@
 package com.example.ben.myapplication;
 
+import android.app.ProgressDialog;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -68,6 +69,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
     private StorageReference mStorageRef;
     public String sdownLoadUri ;
     public static final String UPLOAD_URI = "URI";
+    private ProgressDialog mProgressDialog;
 
     Item item = new Item();
     @Override
@@ -79,11 +81,11 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
            // ImageLoader.getInstance().displayImage(imagePath.toString(), profileImage);
             Picasso.get()
                     .load(mSelectedImageUri)
-                    .resize(100, 100)
+                    .resize(388, 200)
                     .centerCrop()
                     .into(profileImage);
            // uploadFromUrit(mSelectedImageUri);
-            uploadFromUrit(mSelectedImageUri);
+            uploadFromUri(mSelectedImageUri);
            // addPage(mDownloadUrl);
         }
 
@@ -97,10 +99,10 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
             // ImageLoader.getInstance().displayImage(imagePath.toString(), profileImage);
             Picasso.get()
                     .load(imagePath)
-                    .resize(100, 100)
+                    .resize(388, 200)
                     .centerCrop()
                     .into(profileImage);
-            uploadFromUrit(mTakeImageUri);
+            uploadFromUri(mTakeImageUri);
            // addPage(mDownloadUrl);
         }
 
@@ -138,17 +140,9 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
             profileImage.setImageBitmap(bitmap);
         }
     }*/
-    @BindView(R.id.inname)
-    TextView mname;
-    @BindView(R.id.incity)
-    TextView mcity;
-    @BindView(R.id.incat)
-    TextView mcat;
 
-    @BindView(R.id.inprice)
-    TextView mprice;
-    @BindView(R.id.inrating)
-    TextView mrating;
+
+
     @BindView(R.id.add)
     Button badd;
     @BindView(R.id.profile_image)
@@ -191,7 +185,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
             @Override
             public void onReceive(Context context, Intent intent) {
                 Log.d(TAG, "onReceive1:" + intent);
-              //  hideProgressDialog();
+               hideProgressDialog();
 
                 switch (intent.getAction()) {
                   /*  case MyDownloadService.DOWNLOAD_COMPLETED:
@@ -239,7 +233,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
 
 
     private void setEditingEnabled(boolean enabled) {
-        mname.setEnabled(enabled);
+      //  mname.setEnabled(enabled);
 
         if (enabled) {
             badd.setVisibility(View.VISIBLE);
@@ -306,7 +300,22 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                 .setAction(MyUploadService.ACTION_UPLOAD));
 
         // Show loading spinner
-        //showProgressDialog(getString(R.string.progress_uploading));
+        showProgressDialog(getString(R.string.progress_uploading));
+    }
+    private void showProgressDialog(String caption) {
+        if (mProgressDialog == null) {
+            mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setIndeterminate(true);
+        }
+
+
+        mProgressDialog.setMessage(caption);
+        mProgressDialog.show();
+    }
+    private void hideProgressDialog() {
+        if (mProgressDialog != null && mProgressDialog.isShowing()) {
+            mProgressDialog.dismiss();
+        }
     }
     private void onUploadResultIntent(Intent intent) {
         Log.d(TAG, "onUploadResultIntent:" + mDownloadUrl);
@@ -343,8 +352,13 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         Log.d(TAG, "addPage:" + mDownloadUrl);
         Intent intent = new Intent(this,Main3Activity.class);
         intent.putExtra("uri",mDownloadUrl.toString());
+        if(mSelectedImageUri != null){
+            intent.putExtra("selecturi",mSelectedImageUri.toString());
+        }else if(mTakeImageUri != null){
+            intent.putExtra("takeuri",mTakeImageUri.toString());
+        }
         startActivity(intent);
-       // finish();
+       finish();
 
 
 

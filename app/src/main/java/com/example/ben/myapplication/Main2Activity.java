@@ -4,11 +4,15 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -23,16 +27,19 @@ import android.widget.Toast;
 import com.example.ben.myapplication.model.Item;
 import com.example.ben.myapplication.viewmodel.MainActivityViewModel;
 import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,10 +61,15 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
     private byte[] mBytes;
     private double progress;
     private BroadcastReceiver mBroadcastReceiver;
-    private Uri mDownloadUrl;
+    public Uri mDownloadUrl ;
+     public Uri mDownloadUrl2;
     private static final String KEY_FILE_URI = "key_file_uri";
     private static final String KEY_DOWNLOAD_URL = "key_download_url";
     private StorageReference mStorageRef;
+    public String sdownLoadUri ;
+    public static final String UPLOAD_URI = "URI";
+
+    Item item = new Item();
     @Override
     public void getImagePath(Uri imagePath) {
         if( !imagePath.toString().equals("")){
@@ -70,12 +82,12 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                     .resize(100, 100)
                     .centerCrop()
                     .into(profileImage);
+           // uploadFromUrit(mSelectedImageUri);
             uploadFromUrit(mSelectedImageUri);
-
+           // addPage(mDownloadUrl);
         }
 
     }
-
     @Override
     public void getImageBitmap(Uri imagePath) {
         if( !imagePath.toString().equals("")){
@@ -89,9 +101,34 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                     .centerCrop()
                     .into(profileImage);
             uploadFromUrit(mTakeImageUri);
+           // addPage(mDownloadUrl);
         }
 
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //updateUI(mAuth.getCurrentUser());
+
+        // Register receiver for uploads and downloads
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+       // manager.registerReceiver(mBroadcastReceiver, MyDownloadService.getIntentFilter());
+       // manager.registerReceiver(mBroadcastReceiver, MyUploadService.getIntentFilter());
+        manager.registerReceiver(mBroadcastReceiver, MyUploadService.getIntentFilter());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // Unregister download receiver
+       LocalBroadcastManager.getInstance(this).unregisterReceiver(mBroadcastReceiver);
+    }
+
+
+
+
   /*  @Override
     public void getImageBitmap(Bitmap bitmap) {
         if(bitmap != null){
@@ -114,7 +151,6 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
     TextView mrating;
     @BindView(R.id.add)
     Button badd;
-    Item item = new Item();
     @BindView(R.id.profile_image)
     ImageView profileImage;
 
@@ -123,6 +159,8 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
         ButterKnife.bind(this);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         setSupportActionBar(toolbar);
@@ -136,89 +174,69 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
             }
         });
 
-        mFirestore = FirebaseFirestore.getInstance();
+        //mFirestore = FirebaseFirestore.getInstance();
 
         // Get reference to the item
-        mRestaurantRef = mFirestore.collection("items").document();
-        final DocumentReference ratingRef = mRestaurantRef.collection("ratings").document();
-        Bundle extras = getIntent().getExtras();
-        if(extras == null) {
-            mDownloadUrl= null;
-        } else {
-            mDownloadUrl= (Uri)extras.get("EXTRA_DOWNLOAD_URL");
-        }
+      //  mRestaurantRef = mFirestore.collection("items").document();
+       // final DocumentReference ratingRef = mRestaurantRef.collection("ratings").document();
+
+
         if (savedInstanceState!= null) {
-
-            mFileUri = savedInstanceState.getParcelable(KEY_FILE_URI);
-            mDownloadUrl = savedInstanceState.getParcelable(KEY_DOWNLOAD_URL);
+            //mFileUri = savedInstanceState.getParcelable(KEY_FILE_URI);
+            //mDownloadUrl = savedInstanceState.getParcelable(KEY_DOWNLOAD_URL);
         }
-
         onNewIntent(getIntent());
-        // Local broadcast receiver
         mBroadcastReceiver = new BroadcastReceiver() {
+
             @Override
             public void onReceive(Context context, Intent intent) {
-                Log.d(TAG, "onReceive:" + intent);
-
+                Log.d(TAG, "onReceive1:" + intent);
+              //  hideProgressDialog();
 
                 switch (intent.getAction()) {
+                  /*  case MyDownloadService.DOWNLOAD_COMPLETED:
+                        // Get number of bytes downloaded
+                        long numBytes = intent.getLongExtra(MyDownloadService.EXTRA_BYTES_DOWNLOADED, 0);
 
+                        // Alert success
+                        showMessageDialog(getString(R.string.success), String.format(Locale.getDefault(),
+                                "%d bytes downloaded from %s",
+                                numBytes,
+                                intent.getStringExtra(MyDownloadService.EXTRA_DOWNLOAD_PATH)));
+                        break;
+                    case MyDownloadService.DOWNLOAD_ERROR:
+                        // Alert failure
+                        showMessageDialog("Error", String.format(Locale.getDefault(),
+                                "Failed to download from %s",
+                                intent.getStringExtra(MyDownloadService.EXTRA_DOWNLOAD_PATH)));
+                        break;*/
                     case MyUploadService.UPLOAD_COMPLETED:
                     case MyUploadService.UPLOAD_ERROR:
                         onUploadResultIntent(intent);
+                        mDownloadUrl = intent.getParcelableExtra(MyUploadService.EXTRA_DOWNLOAD_URL);
+                        item.setPhoto(mDownloadUrl.toString());
+                      //  addItem(mDownloadUrl);
+
+                        //mRestaurantRef.set(item);
+
                         break;
                 }
             }
         };
     }
-    @Override
-    public void onSaveInstanceState(Bundle out) {
-        super.onSaveInstanceState(out);
-        out.putParcelable(KEY_FILE_URI, mFileUri);
-        out.putParcelable(KEY_DOWNLOAD_URL, mDownloadUrl);
-    }
 
-    @Override
-    public void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
+  //  }
 
-        // Check if this Activity was launched by clicking on an upload notification
-        if (intent.hasExtra(MyUploadService.EXTRA_DOWNLOAD_URL)) {
-            onUploadResultIntent(intent);
-        }
 
-    }
 
     @OnClick(R.id.add)
     public void clicked(View view) {
-        addItem();
+        //addItem();
+        addPage();
     }
 
 
-    public void addItem() {
 
-
-        Log.d(TAG, "uploadFromUri:onSuccess"+mDownloadUrl);
-        item.setName(mname.getText().toString());
-        item.setLocation(mcity.getText().toString());
-        item.setCategory(mcat.getText().toString());
-        item.setPhoto(mDownloadUrl.toString());
-        item.setPrice(1);
-        item.setNumRatings(1);
-        //item.setUsername( FirebaseAuth.getInstance().getCurrentUser().toString());
-        //item.setUserid();
-        //item.setPrice(Integer.parseInt(mprice.toString()));
-        //item.setNumRatings(Integer.parseInt(mrating.toString()));
-
-        mRestaurantRef.set(item);
-        setEditingEnabled(false);
-        Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
-
-        setEditingEnabled(true);
-        finish();
-
-
-    }
 
     private void setEditingEnabled(boolean enabled) {
         mname.setEnabled(enabled);
@@ -275,7 +293,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
         // Save the File URI
-        //mFileUri = fileUri;
+        mFileUri = fileUri;
 
         // Clear the last download, if any
        // updateUI(mAuth.getCurrentUser());
@@ -291,19 +309,138 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         //showProgressDialog(getString(R.string.progress_uploading));
     }
     private void onUploadResultIntent(Intent intent) {
+        Log.d(TAG, "onUploadResultIntent:" + mDownloadUrl);
         // Got a new intent from MyUploadService with a success or failure
         mDownloadUrl = intent.getParcelableExtra(MyUploadService.EXTRA_DOWNLOAD_URL);
-        //mFileUri = intent.getParcelableExtra(MyUploadService.EXTRA_FILE_URI);
-
+       // mFileUri = intent.getParcelableExtra(MyUploadService.EXTRA_FILE_URI);
+        Log.d(TAG, "onUploadResultIntent:" + mDownloadUrl);
+        mDownloadUrl2 =mDownloadUrl;
+        sdownLoadUri = mDownloadUrl.toString();
+        Log.d(TAG, "onUploadResultIntent:" +  sdownLoadUri);
         //updateUI(mAuth.getCurrentUser());
     }
 
+    private void uploadFromUriy(Uri fileUri) {
+        Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
+
+        // Save the File URI
+        mFileUri = fileUri;
+
+        // Clear the last download, if any
+       // updateUI(mAuth.getCurrentUser());
+      //  mDownloadUrl = null;
+
+        // Start MyUploadService to upload the file, so that the file is uploaded
+        // even if this Activity is killed or put in the background
+        startService(new Intent(this, MyUploadService.class)
+                .putExtra(MyUploadService.EXTRA_FILE_URI, fileUri)
+                .setAction(MyUploadService.ACTION_UPLOAD));
+
+        // Show loading spinner
+        //showProgressDialog(getString(R.string.progress_uploading));
+    }
+    public void addPage(){
+        Log.d(TAG, "addPage:" + mDownloadUrl);
+        Intent intent = new Intent(this,Main3Activity.class);
+        intent.putExtra("uri",mDownloadUrl.toString());
+        startActivity(intent);
+       // finish();
+
+
+
+    }
+    /*
+    public void addItem(Uri uri) {
+
+
+        Intent intent = new Intent(this,Main3Activity.class);
+        startActivity(intent);
+        startActivity(new Intent(this,Main3Activity.class)
+                .putExtra(Main3Activity.UPLOAD_URI, uri));
+        startActivity(new Intent(this,Main3Activity.class)
+                .putExtra(Main3Activity.UPLOAD_URI, uri));
+
+        uploadFromUri(mSelectedImageUri);
+        if(mTakeImageUri != null){
+
+           uploadFromUri(mTakeImageUri);}
+            //uri=mTakeImageUri;
+         if(mSelectedImageUri != null){
+            //uri=mSelectedImageUri;
+
+            uploadFromUri(mSelectedImageUri);
+        }
+        Log.d(TAG, "uploadFromUri:onSuccessup4" + sdownLoadUri);
+        Log.d(TAG, "uploadFromUri:onSuccessadd"+mSelectedImageUri);
+        Log.d(TAG, "uploadFromUri:onSuccess2"+mDownloadUrl );
+        Log.d(TAG, "uploadFromUri:onSuccess23"+mDownloadUrl2 );
+        Log.d(TAG, "onUploadResultIntent:" +  sdownLoadUri);
+        item.setName(mname.getText().toString());
+        item.setLocation(mcity.getText().toString());
+        item.setCategory(mcat.getText().toString());
+        //item.setPhoto(mDownloadUrl.toString());
+        item.setPrice(1);
+        item.setNumRatings(1);
+        //item.setUsername( FirebaseAuth.getInstance().getCurrentUser().toString());
+        //item.setUserid();
+        //item.setPrice(Integer.parseInt(mprice.toString()));
+        //item.setNumRatings(Integer.parseInt(mrating.toString()));
+
+
+/*
+        // [START_EXCLUDE]
+
+
+        // [END_EXCLUDE]
+
+        // [START get_child_ref]
+        // Get a reference to store file at photos/<FILENAME>.jpg
+        final StorageReference photoRef = mStorageRef.child("photos")
+                .child(uri.getLastPathSegment());
+        // [END get_child_ref]
+
+        // Upload file to Firebase Storage
+        Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
+        photoRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                // Upload succeeded
+                Log.d(TAG, "uploadFromUri:onSuccess");
+
+                // Get the public download URL
+                Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
+                mDownloadUrl2 = downloadUri;
+                sdownLoadUri = mDownloadUrl2.toString();
+                item.setPhoto(sdownLoadUri);
+                Log.d(TAG, "uploadFromUri:onSuccessup" + downloadUri);
+                // [START_EXCLUDE]
+
+
+                Log.d(TAG, "uploadFromUri:onSuccessup2" + mDownloadUrl2);
+                sdownLoadUri = mDownloadUrl2.toString();
+                Log.d(TAG, "uploadFromUri:onSuccessup3" + sdownLoadUri);
+                // [END_EXCLUDE]
+
+            }
+        });
+
+        mRestaurantRef.set(item);
+        setEditingEnabled(false);
+        Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
+
+        setEditingEnabled(true);
+       // finish();
+
+
+
+
+    }*/
     private void uploadFromUrit(final Uri fileUri) {
         Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
         // [START_EXCLUDE]
-
-
+        //taskStarted();
+       // showProgressNotification(getString(R.string.progress_uploading), 0, 0);
         // [END_EXCLUDE]
 
         // [START get_child_ref]
@@ -314,24 +451,45 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
 
         // Upload file to Firebase Storage
         Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
-        photoRef.putFile(fileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // Upload succeeded
-                Log.d(TAG, "uploadFromUri:onSuccess");
+        photoRef.putFile(fileUri).
+                addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                       // showProgressNotification(getString(R.string.progress_uploading),
+                              //  taskSnapshot.getBytesTransferred(),
+                              //  taskSnapshot.getTotalByteCount());
+                    }
+                })
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        // Upload succeeded
+                        Log.d(TAG, "uploadFromUri:onSuccess");
 
-                // Get the public download URL
-                Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
-                Log.d(TAG, "uploadFromUri:onSuccess"+downloadUri);
-                // [START_EXCLUDE]
+                        // Get the public download URL
+                        mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
+                        Log.d(TAG, "uploadFromUri:onSuccess"+mDownloadUrl);
+                        // [START_EXCLUDE]
+                        // broadcastUploadFinished(downloadUri, fileUri);
+                        //broadcastUploadFinished(downloadUri, downloadUri);
+                       // showUploadFinishedNotification(downloadUri, fileUri);
+                        //taskCompleted();
+                        // [END_EXCLUDE]
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception exception) {
+                        // Upload failed
+                        Log.w(TAG, "uploadFromUri:onFailure", exception);
 
-               mDownloadUrl=downloadUri;
-
-
-                // [END_EXCLUDE]
-            }
-        });
-
+                        // [START_EXCLUDE]
+                       // broadcastUploadFinished(null, fileUri);
+                        //showUploadFinishedNotification(null, fileUri);
+                        //taskCompleted();
+                        // [END_EXCLUDE]
+                    }
+                });
     }
     }
 

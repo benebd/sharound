@@ -20,7 +20,6 @@ android {
 
 dependencies {
 
-
     // Firestore
     implementation 'com.google.firebase:firebase-firestore:12.0.1'
 

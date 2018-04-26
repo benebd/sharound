@@ -102,5 +102,6 @@
 
     <string name="progress_uploading">Uploading…</string>
     <string name="upload_success">Upload finished</string>
-    <string name="upload_failure">Upload failed</string>\
+    <string name="upload_failure">Upload failed</string>
+    <string name="title_activity_main3">Main3Activity</string>\
 </resources>

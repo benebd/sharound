@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RestaurantDetailActivity"
+            android:name=".ItemDetailActivity"
             android:theme="@style/AppTheme.Activity" />
         <activity
             android:name=".Main2Activity"

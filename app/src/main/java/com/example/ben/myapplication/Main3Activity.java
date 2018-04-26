@@ -18,6 +18,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ben.myapplication.model.Item;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -141,18 +143,21 @@ public class Main3Activity extends AppCompatActivity {
     public void addItem() {
 
      Log.d(TAG,"M3additem"+uploadUri);
-
+        String selectedCat =(String)spinner.getSelectedItem();
+        String selectedCity =(String)spinner2.getSelectedItem();
         mRestaurantRef = mFirestore.collection("items").document();
-
+         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+         String userName = user.getDisplayName();
+         String userid = user.getUid();
 
         item.setName(inname.getText().toString());
-        item.setLocation(incity.getText().toString());
-        item.setCategory(incat.getText().toString());
+        item.setLocation(selectedCity);
+        item.setCategory(selectedCat);
         item.setPhoto(uploadUri);
         item.setPrice(1);
         item.setNumRatings(1);
-        //item.setUsername( FirebaseAuth.getInstance().getCurrentUser().toString());
-        //item.setUserid();
+        item.setUsername(userName);
+        item.setUserid(userid);
         //item.setPrice(Integer.parseInt(mprice.toString()));
         //item.setNumRatings(Integer.parseInt(mrating.toString()));
 
@@ -205,4 +210,5 @@ public class Main3Activity extends AppCompatActivity {
 
 
     }
+
 }

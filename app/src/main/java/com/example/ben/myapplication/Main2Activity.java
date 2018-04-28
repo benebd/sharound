@@ -48,34 +48,27 @@ import butterknife.OnClick;
 
 public class Main2Activity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener{
     private static final String TAG = "Main2Activity";
-    private FirebaseFirestore mFirestore;
-    private DocumentReference mRestaurantRef;
-    private RatingDialogFragment mRatingDialog;
-    private FirebaseAuth mAuth;
+
     private static final int RC_SIGN_IN = 9001;
-    private Uri mFileUri;
+
     private MainActivityViewModel mViewModel;
-    private boolean mStoragePermissions;
+
     public Uri mSelectedImageUri;
     private Uri mTakeImageUri;
-    private Bitmap mSelectedImageBitmap;
-    private byte[] mBytes;
-    private double progress;
     private BroadcastReceiver mBroadcastReceiver;
     public Uri mDownloadUrl ;
      public Uri mDownloadUrl2;
-    private static final String KEY_FILE_URI = "key_file_uri";
-    private static final String KEY_DOWNLOAD_URL = "key_download_url";
+
     private StorageReference mStorageRef;
     public String sdownLoadUri ;
-    public static final String UPLOAD_URI = "URI";
+
     private ProgressDialog mProgressDialog;
 
     Item item = new Item();
     @Override
     public void getImagePath(Uri imagePath) {
         if( !imagePath.toString().equals("")){
-            mSelectedImageBitmap = null;
+
             mSelectedImageUri = imagePath;
             Log.d(TAG, "getImagePath: got the image uri: " + mSelectedImageUri);
            // ImageLoader.getInstance().displayImage(imagePath.toString(), profileImage);
@@ -93,7 +86,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
     @Override
     public void getImageBitmap(Uri imagePath) {
         if( !imagePath.toString().equals("")){
-            mSelectedImageBitmap = null;
+
             mTakeImageUri = imagePath;
             Log.d(TAG, "getImagePath: got the image uri: " + mSelectedImageUri);
             // ImageLoader.getInstance().displayImage(imagePath.toString(), profileImage);
@@ -159,20 +152,10 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         mStorageRef = FirebaseStorage.getInstance().getReference();
         setSupportActionBar(toolbar);
         mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
-        //mFirestore = FirebaseFirestore.getInstance();
 
-        // Get reference to the item
-      //  mRestaurantRef = mFirestore.collection("items").document();
-       // final DocumentReference ratingRef = mRestaurantRef.collection("ratings").document();
+
+
 
 
         if (savedInstanceState!= null) {
@@ -188,30 +171,13 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                hideProgressDialog();
 
                 switch (intent.getAction()) {
-                  /*  case MyDownloadService.DOWNLOAD_COMPLETED:
-                        // Get number of bytes downloaded
-                        long numBytes = intent.getLongExtra(MyDownloadService.EXTRA_BYTES_DOWNLOADED, 0);
 
-                        // Alert success
-                        showMessageDialog(getString(R.string.success), String.format(Locale.getDefault(),
-                                "%d bytes downloaded from %s",
-                                numBytes,
-                                intent.getStringExtra(MyDownloadService.EXTRA_DOWNLOAD_PATH)));
-                        break;
-                    case MyDownloadService.DOWNLOAD_ERROR:
-                        // Alert failure
-                        showMessageDialog("Error", String.format(Locale.getDefault(),
-                                "Failed to download from %s",
-                                intent.getStringExtra(MyDownloadService.EXTRA_DOWNLOAD_PATH)));
-                        break;*/
                     case MyUploadService.UPLOAD_COMPLETED:
                     case MyUploadService.UPLOAD_ERROR:
                         onUploadResultIntent(intent);
                         mDownloadUrl = intent.getParcelableExtra(MyUploadService.EXTRA_DOWNLOAD_URL);
                         item.setPhoto(mDownloadUrl.toString());
-                      //  addItem(mDownloadUrl);
 
-                        //mRestaurantRef.set(item);
 
                         break;
                 }
@@ -219,13 +185,13 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         };
     }
 
-  //  }
+
 
 
 
     @OnClick(R.id.add)
     public void clicked(View view) {
-        //addItem();
+
         addPage();
     }
 
@@ -287,11 +253,9 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
         // Save the File URI
-        mFileUri = fileUri;
 
-        // Clear the last download, if any
-       // updateUI(mAuth.getCurrentUser());
-       // mDownloadUrl = null;
+
+
 
         // Start MyUploadService to upload the file, so that the file is uploaded
         // even if this Activity is killed or put in the background
@@ -329,25 +293,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
         //updateUI(mAuth.getCurrentUser());
     }
 
-    private void uploadFromUriy(Uri fileUri) {
-        Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
-        // Save the File URI
-        mFileUri = fileUri;
-
-        // Clear the last download, if any
-       // updateUI(mAuth.getCurrentUser());
-      //  mDownloadUrl = null;
-
-        // Start MyUploadService to upload the file, so that the file is uploaded
-        // even if this Activity is killed or put in the background
-        startService(new Intent(this, MyUploadService.class)
-                .putExtra(MyUploadService.EXTRA_FILE_URI, fileUri)
-                .setAction(MyUploadService.ACTION_UPLOAD));
-
-        // Show loading spinner
-        //showProgressDialog(getString(R.string.progress_uploading));
-    }
     public void addPage(){
         Log.d(TAG, "addPage:" + mDownloadUrl);
         Intent intent = new Intent(this,Main3Activity.class);

@@ -30,8 +30,7 @@ import butterknife.OnClick;
 
 public class Main3Activity extends AppCompatActivity {
     private static final String TAG = "Main3Activity";
-    public static final String URI_MESSAGE = "message.uri";
-    public static final String UPLOAD_URI = "URI";
+
     public String uploadUri;
     public String takeUri;
     public String selectUri;
@@ -52,41 +51,22 @@ public class Main3Activity extends AppCompatActivity {
     RelativeLayout R1;
     @BindView(R.id.spinner2)
     Spinner spinner2;
-    @BindView(R.id.incity)
-    EditText incity;
+
     @BindView(R.id.textView5)
     TextView textView5;
-    @BindView(R.id.R2)
-    RelativeLayout R2;
+
     @BindView(R.id.spinner)
     Spinner spinner;
-    @BindView(R.id.incat)
-    EditText incat;
-    @BindView(R.id.textView4)
-    TextView textView4;
-    @BindView(R.id.R3)
-    RelativeLayout R3;
-    @BindView(R.id.inphoto)
-    EditText inphoto;
 
-    @BindView(R.id.R4)
-    RelativeLayout R4;
-    @BindView(R.id.inprice)
-    EditText inprice;
 
-    @BindView(R.id.R5)
-    RelativeLayout R5;
-    @BindView(R.id.inrating)
-    EditText inrating;
 
-    @BindView(R.id.R6)
-    RelativeLayout R6;
+
     @BindView(R.id.add)
     Button add;
     @BindView(R.id.image)
     RelativeLayout image;
-    @BindView(R.id.fab)
-    FloatingActionButton fab;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,14 +77,8 @@ public class Main3Activity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         mFirestore = FirebaseFirestore.getInstance();
         mRestaurantRef = mFirestore.collection("items").document();
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
+
 
         //  Uri fileUri = null;
         // Bundle extras = getIntent().getExtras();

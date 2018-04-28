@@ -58,25 +58,25 @@ public class ItemAdapter extends FirestoreAdapter<ItemAdapter.ViewHolder> {
         private static final SimpleDateFormat FORMAT  = new SimpleDateFormat(
                 "MM/dd/yyyy", Locale.US);
 
-        @BindView(R.id.restaurant_item_image)
+        @BindView(R.id.item_image)
         ImageView imageView;
 
-        @BindView(R.id.restaurant_item_name)
+        @BindView(R.id.item_name)
         TextView nameView;
 
-        @BindView(R.id.restaurant_item_rating)
+        @BindView(R.id.item_rating)
         MaterialRatingBar ratingBar;
 
-        @BindView(R.id.restaurant_item_num_ratings)
+        @BindView(R.id.item_num_ratings)
         TextView numRatingsView;
 
-        @BindView(R.id.restaurant_item_price)
+        @BindView(R.id.item_price)
         TextView priceView;
 
-        @BindView(R.id.restaurant_item_category)
+        @BindView(R.id.item_category)
         TextView categoryView;
 
-        @BindView(R.id.restaurant_item_city)
+        @BindView(R.id.item_city)
         TextView cityView;
 
         @BindView(R.id.username)

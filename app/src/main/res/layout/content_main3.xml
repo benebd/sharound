@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="14dp"
-                android:layout_toRightOf="@id/textView5"
+
                 android:entries="@array/cities" />
 
             <TextView
@@ -110,7 +110,7 @@
                 android:layout_width="248dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
-                android:layout_toRightOf="@id/textView4"
+
                 android:entries="@array/categories" />
 
             <TextView
@@ -118,7 +118,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:layout_alignParentStart="true"
-                android:layout_alignTop="@+id/incity"
+
                 android:layout_marginLeft="8dp"
                 android:text="categegoy" />
         </RelativeLayout>

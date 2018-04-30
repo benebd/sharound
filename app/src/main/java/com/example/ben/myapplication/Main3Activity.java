@@ -3,12 +3,9 @@ package com.example.ben.myapplication;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,30 +31,24 @@ public class Main3Activity extends AppCompatActivity {
     public String uploadUri;
     public String takeUri;
     public String selectUri;
+
     private FirebaseFirestore mFirestore;
     private DocumentReference mRestaurantRef;
     Item item = new Item();
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-    @BindView(R.id.textHeader)
-    TextView textHeader;
+
+
     @BindView(R.id.profile_image)
     ImageView profileImage;
     @BindView(R.id.inname)
     EditText inname;
-    @BindView(R.id.textView3)
-    TextView textView3;
-    @BindView(R.id.R1)
-    RelativeLayout R1;
+
     @BindView(R.id.spinner2)
     Spinner spinner2;
 
-    @BindView(R.id.textView5)
-    TextView textView5;
+
 
     @BindView(R.id.spinner)
     Spinner spinner;
-
 
 
 
@@ -66,7 +57,11 @@ public class Main3Activity extends AppCompatActivity {
     @BindView(R.id.image)
     RelativeLayout image;
 
-
+    //Location
+    @BindView(R.id.E_latitude)
+    EditText ELatitude;
+    @BindView(R.id.E_longitude)
+    EditText ELongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,29 +74,28 @@ public class Main3Activity extends AppCompatActivity {
         mRestaurantRef = mFirestore.collection("items").document();
 
 
-
         //  Uri fileUri = null;
         // Bundle extras = getIntent().getExtras();
         // fileUri=Uri.parse(extras.getString("uri"));
         Intent intent = getIntent();
         uploadUri = intent.getStringExtra("uri");
         takeUri = intent.getStringExtra("takeuri");
-        selectUri =intent.getStringExtra("selecturi");
-        Log.d(TAG,"Main3Activitys"+selectUri);
-        Log.d(TAG,"Main3Activityt"+takeUri);
+        selectUri = intent.getStringExtra("selecturi");
+        Log.d(TAG, "Main3Activitys" + selectUri);
+        Log.d(TAG, "Main3Activityt" + takeUri);
         //Intent intent = new Intent();
         // Uri fileUri = intent.getParcelableExtra(UPLOAD_URI);
         // intent,getString
         Log.d(TAG, "Main3activity" + uploadUri);
-        if(selectUri!=null){
-               // Uri.parse(selectUri);
-                        Picasso.get()
-                                .load(Uri.parse(selectUri))
-                                .resize(100, 100)
-                                .centerCrop()
-                                .into(profileImage);
-        }else if(takeUri != null){
-               // Uri.parse(takeUri);
+        if (selectUri != null) {
+            // Uri.parse(selectUri);
+            Picasso.get()
+                    .load(Uri.parse(selectUri))
+                    .resize(100, 100)
+                    .centerCrop()
+                    .into(profileImage);
+        } else if (takeUri != null) {
+            // Uri.parse(takeUri);
             Picasso.get()
                     .load(Uri.parse(takeUri))
                     .resize(100, 100)
@@ -109,6 +103,7 @@ public class Main3Activity extends AppCompatActivity {
                     .into(profileImage);
         }
     }
+
     @OnClick(R.id.add)
     public void onViewClicked() {
         addItem();
@@ -116,71 +111,37 @@ public class Main3Activity extends AppCompatActivity {
 
     public void addItem() {
 
-     Log.d(TAG,"M3additem"+uploadUri);
-        String selectedCat =(String)spinner.getSelectedItem();
-        String selectedCity =(String)spinner2.getSelectedItem();
+        Log.d(TAG, "M3additem" + uploadUri);
+        String selectedCat = (String) spinner.getSelectedItem();
+        String selectedCity = (String) spinner2.getSelectedItem();
         mRestaurantRef = mFirestore.collection("items").document();
-         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-         String userName = user.getDisplayName();
-         String userid = user.getUid();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String userName = user.getDisplayName();
+        String userid = user.getUid();
 
         item.setName(inname.getText().toString());
         item.setLocation(selectedCity);
         item.setCategory(selectedCat);
         item.setPhoto(uploadUri);
-        item.setPrice(1);
-        item.setNumRatings(1);
+       // item.setPrice(1);
+       // item.setNumRatings(1);
         item.setUsername(userName);
         item.setUserid(userid);
+        //item.setLatitude(Double.parseDouble(ELatitude.getText().toString()));
+        //item.setLongitude(Double.parseDouble(ELongitude.getText().toString()));
+        item.setLongitude(1);
+        item.setLatitude(1);
         //item.setPrice(Integer.parseInt(mprice.toString()));
         //item.setNumRatings(Integer.parseInt(mrating.toString()));
 
 
-/*
-        // [START_EXCLUDE]
 
-
-        // [END_EXCLUDE]
-
-        // [START get_child_ref]
-        // Get a reference to store file at photos/<FILENAME>.jpg
-        final StorageReference photoRef = mStorageRef.child("photos")
-                .child(uri.getLastPathSegment());
-        // [END get_child_ref]
-
-        // Upload file to Firebase Storage
-        Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
-        photoRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // Upload succeeded
-                Log.d(TAG, "uploadFromUri:onSuccess");
-
-                // Get the public download URL
-                Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
-                mDownloadUrl2 = downloadUri;
-                sdownLoadUri = mDownloadUrl2.toString();
-                item.setPhoto(sdownLoadUri);
-                Log.d(TAG, "uploadFromUri:onSuccessup" + downloadUri);
-                // [START_EXCLUDE]
-
-
-                Log.d(TAG, "uploadFromUri:onSuccessup2" + mDownloadUrl2);
-                sdownLoadUri = mDownloadUrl2.toString();
-                Log.d(TAG, "uploadFromUri:onSuccessup3" + sdownLoadUri);
-                // [END_EXCLUDE]
-
-            }
-        });
-        */
         mRestaurantRef.set(item);
-       // setEditingEnabled(false);
+        // setEditingEnabled(false);
         Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
 
 
-         finish();
-
-
+        finish();
 
 
     }

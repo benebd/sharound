@@ -22,7 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".MainActivity" />
         <activity
             android:name=".ItemDetailActivity"
             android:theme="@style/AppTheme.Activity" />
@@ -62,7 +62,29 @@
 
         <activity
             android:name=".mapAct"
-            android:label="@string/title_activity_map"></activity>
+            android:label="@string/title_activity_map" />
+        <activity
+            android:name=".contactUs_Act"
+            android:label="@string/title_activity_contact_us_"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".termsAct" />
+        <activity
+            android:name=".Main4Activity"
+            android:label="@string/title_activity_main4"
+            android:theme="@style/AppTheme">
+
+            <!--
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            -->
+        </activity>
+        <activity
+            android:name=".MyitemdetailAct"
+            android:label="@string/title_activity_myitemdetail"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

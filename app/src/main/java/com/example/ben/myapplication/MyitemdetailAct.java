@@ -3,7 +3,6 @@ package com.example.ben.myapplication;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,16 +14,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.example.ben.myapplication.adapter.RatingAdapter;
 import com.example.ben.myapplication.model.Item;
-import com.example.ben.myapplication.model.Rating;
+import com.bumptech.glide.Glide;
 import com.example.ben.myapplication.util.ItemUtil;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import  com.example.ben.myapplication.adapter.RatingAdapter;
+import  com.example.ben.myapplication.model.Rating;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -39,13 +36,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import me.zhanghai.android.materialratingbar.MaterialRatingBar;
 
-public class ItemDetailActivity extends AppCompatActivity
+public class MyitemdetailAct extends AppCompatActivity
         implements EventListener<DocumentSnapshot>, RatingDialogFragment.RatingListener {
 
     private static final String TAG = "ItemDetail";
 
-    public static final String KEY_ITEM_ID = "key_item_id";
-    public static final String KEY_ITEM_UID ="key_item_uid";
+    public static final String KEY_RESTAURANT_ID = "key_item_id";
+
     @BindView(R.id.item_image)
     ImageView mImageView;
 
@@ -73,9 +70,6 @@ public class ItemDetailActivity extends AppCompatActivity
     @BindView(R.id.recycler_ratings)
     RecyclerView mRatingsRecycler;
 
-    @BindView(R.id.fab_show_delete)
-    FloatingActionButton fabShowDelete;
-
     private RatingDialogFragment mRatingDialog;
 
     private FirebaseFirestore mFirestore;
@@ -89,22 +83,14 @@ public class ItemDetailActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_item_detail);
         ButterKnife.bind(this);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         // Get item ID from extras
-
-        String itemid = getIntent().getExtras().getString(KEY_ITEM_ID);
-        String itemUid =getIntent().getExtras().getString(KEY_ITEM_UID);
-        Log.d(TAG,"onCreateitemid"+itemid);
-        Log.d(TAG,"onCreateitemUid"+itemUid);
+        String itemid = getIntent().getExtras().getString(KEY_RESTAURANT_ID);
         if (itemid == null) {
-            throw new IllegalArgumentException("Must pass extra " + KEY_ITEM_ID);
+            throw new IllegalArgumentException("Must pass extra " + KEY_RESTAURANT_ID);
         }
-       String userid = user.getUid();
-         if (user.getUid() == itemUid){
-        fabShowDelete.setVisibility(View.VISIBLE);}
-        Log.d(TAG,"onCreateitemUid2"+userid);
 
+        // Initialize Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
         // Get reference to the item

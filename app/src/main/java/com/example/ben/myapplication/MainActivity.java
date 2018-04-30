@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements
 
         // Get ${LIMIT} restaurants
         mQuery = mFirestore.collection("items")
-                .orderBy("avgRating", Query.Direction.DESCENDING)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(LIMIT);
 
         // RecyclerView
@@ -174,7 +174,9 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_add_items:
-                onAddItemsClicked();
+               // onAddItemsClicked();
+                Intent intent1 = new Intent(MainActivity.this,Main4Activity.class);
+                startActivity(intent1);
                 break;
             case R.id.menu_sign_out:
                 AuthUI.getInstance().signOut(this);
@@ -184,6 +186,9 @@ public class MainActivity extends AppCompatActivity implements
                 Intent intent = new Intent(MainActivity.this,Main2Activity.class);
                 startActivity(intent);
                 break;
+            case R.id.menu_myitem:
+                Intent intent2 = new Intent(this,Main4Activity.class);
+                startActivity(intent2);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -225,8 +230,10 @@ public class MainActivity extends AppCompatActivity implements
     public void onItemSelected(DocumentSnapshot restaurant) {
         // Go to the details page for the selected restaurant
         Intent intent = new Intent(this, ItemDetailActivity.class);
-        intent.putExtra(ItemDetailActivity.KEY_RESTAURANT_ID, restaurant.getId());
-
+        intent.putExtra(ItemDetailActivity.KEY_ITEM_ID, restaurant.getId());
+       intent.putExtra(ItemDetailActivity.KEY_ITEM_UID,restaurant.getString("userid"));
+       String testid =restaurant.getString("userid");
+       Log.d(TAG,"OnitemSeclet"+testid);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }

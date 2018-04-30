@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#E0E0E0"
-    tools:context="com.google.firebase.example.fireeats.MainActivity">
+    tools:context="com.example.ben.myapplication.MainActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -125,9 +125,7 @@
         android:visibility="gone"
         tools:visibility="gone">
 
-        <ImageView
-            style="@style/AppTheme.PizzaGuy"
-            android:src="@drawable/pizza_monster" />
+
 
         <TextView
             style="@style/AppTheme.Body1"

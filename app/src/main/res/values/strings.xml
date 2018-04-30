@@ -25,6 +25,7 @@
 
     <string name="sort_by_rating">Sort by Rating</string>
     <string name="sort_by_popularity">Sort by Popularity</string>
+    <string name="sort_by_time">Sort by Time</string>
     <string name="sort_by_price">Sort by Price</string>
 
     <string name="sorted_by_rating">sorted by rating</string>
@@ -32,8 +33,9 @@
     <string name="sorted_by_popularity">sorted by popularity</string>
 
     <string name="add_random_items">Add Random Items</string>
+    <string name="my_item">My Item</string>
     <string name="sign_out">Sign Out</string>
-    <string name="divider_bullet">•</string>
+    <string name="divider_bullet"></string>
     <string name="apply">Apply</string>
     <string name="cancel">Cancel</string>
     <string name="message_no_results">Oops, couldn\'t find any results\nthat matched your filter</string>
@@ -96,7 +98,8 @@
     <string-array name="sort_by">
         <item>@string/sort_by_rating</item>
         <item>@string/sort_by_popularity</item>
-        <item>@string/sort_by_price</item>
+        <item>@string/sort_by_time</item>
+
     </string-array>
     <string name="title_activity_main2">Main2Activity</string>
 
@@ -113,4 +116,140 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
+    <string name="title_activity_contact_us_">contactUs_Act</string>
+    <string name="term">TERMS AND CONDITIONS
+1.	Contractual Relationship
+These Terms of Use (Terms) govern the access or use by you, an individual, from within any country in the world of applications, websites, content, products, and services (the Services) made available by Sharound., a private company established in Hong Kong, having its principal office located at 1206 Eastern Commercial Centre, 397 Hennessy Road, Wan Chai, Hong Kong (The Company)
+PLEASE READ THESE TERMS CAREFULLY BEFORE ACCESSING OR USING THE SERVICES.
+Your access and use of the Services constitutes your agreement to be bound by these Terms, which establishes a contractual relationship between you and The Company. If you do not agree to these Terms, you may not access or use the Services. These Terms expressly supersede prior agreements or arrangements with you. The Company may immediately terminate these Terms or any Services with respect to you, or generally cease offering or deny access to the Services or any portion thereof, at any time for any reason.
+Supplemental terms may apply to certain Services, such as policies for a particular event, activity or promotion, and such supplemental terms will be disclosed to you in connection with the applicable Services. Supplemental terms are in addition to, and shall be deemed a part of, the Terms for the purposes of the applicable Services. Supplemental terms shall prevail over these Terms in the event of a conflict with respect to the applicable Services.
+The Company may amend the Terms related to the Services from time to time. Amendments will be effective upon The Companys posting of such updated Terms at this location or the amended policies or supplemental terms on the applicable Service. Your continued access or use of the Services after such posting constitutes your consent to be bound by the Terms, as amended.
+Our collection and use of personal information in connection with the Services is as provided in The Companys Privacy Policy. The Company may provide to a claims processor or an insurer any necessary information (including your contact information) if there is a complaint, dispute or conflict, which may include an accident, involving you and a third party and such information or data is necessary to resolve the complaint, dispute or conflict.
+2.	The Services
+The Services constitute a technology platform that enables users of The Companys mobile applications or websites provided as part of the Services (each, an Application) to rent public bicycles, including web services of bicycle-rental software. Unless otherwise agreed by The Company in a separate written agreement with you, the Services are made available solely for your personal, non-commercial use.
+1) License.
+Subject to your compliance with these Terms, The Company grants you a limited, non-exclusive, non-sub- licensable, revocable, non-transferrable license to: (i) access and use the Applications on your personal device solely about your use of the Services; and (ii) access and use any content, information and related materials that may be made available through the Services, in each case solely for your personal, non-commercial use. Any rights not expressly granted herein are reserved by The Company and The Companys licensors.
+(2) Restrictions.
+You may not: (i) remove any copyright, trademark or other proprietary notices from any portion of the Services; (ii) reproduce, modify, prepare derivative works based upon, distribute, license, lease, sell, resell, transfer, publicly display, publicly perform, transmit, stream, broadcast or otherwise exploit the Services except as expressly permitted by the Company; (iii) decompile, reverse engineer or disassemble the Services except as may be permitted by applicable law; (iv) link to, mirror or frame any portion of the Services; (v) cause or launch any programs or scripts for the purpose of scraping, indexing, surveying, or otherwise data mining any portion of the Services or unduly burdening or hindering the operation and/or functionality of any aspect of the Services; or (vi) attempt to gain unauthorised access to or impair any aspect of the Services or its related systems or networks.
+(3) Provision of the Services.
+You acknowledge that portions of the Services may be made available under The Companys various brands or request options associated with public bicycles, including the transportation request brands currently referred to as The Company.
+(4) Third Party Services.
+The Services may be made available or accessed in connection with third party services and content (including advertising) that The Company does not control. You acknowledge that different terms of use and privacy policies may apply to your use of such third party services and content. The Company does not endorse such third party services and content and in no event shall The Company be responsible or liable for any products or services of such third party providers. Additionally, Apple Inc., Google, Inc., and/or their applicable international subsidiaries and affiliates will be third-party beneficiaries to this contract if you access the Services using Applications developed for Apple iOS, Android mobile devices, respectively. These third party beneficiaries are not parties to this contract and are not responsible for the provision or support of the Services in any manner. Your access to the Services using these devices is subject to terms set forth in the applicable third party beneficiarys terms of service.
+(5) Ownership.
+The Services and all rights therein are and shall remain The Companys property or the property of The Companys licensors. Neither these Terms nor your use of the Services convey or grant to you any rights: (i) in or related to the Services except for the limited license granted above; or (ii) to use or reference in any manner The Companys company names, logos, product and service names, trademarks or services marks or those of The Companys licensors.
+(6) Maintenance
+The Company is responsible for the daily running, maintenance and repair of the app. But it does not mean that the Company has the obligation to ensure that all available bicycles are in a trouble-free condition in real time. The rider should confirm the integrity of the components, efficiency, and familiarise with the performance of bicycle and safety devices before using a app.
+If rider finds that the app is broken, he/ she shall cancel reservation or stop using, and notify The Company about the problem. If the rider disregards the broken app and continues use it, the rider should take responsibility for the behaviour.
+3.	Your Use of the Services
+(1) User Accounts.
+In order to use most aspects of the Services, you must register for and maintain an active personal user Services account (Account). You must be in good health condition for riding, to obtain an Account. A profile page shall be provided for you to update your personal information, such as your name, email and mobile phone number. You agree to maintain accurate, complete, and up-to-date information in your Account. Your failure to maintain accurate, complete, and up-to-date Account information may result in your inability to access and use the Services or The Companys termination of these Terms with you. You are responsible for all activity that occurs under your Account, and you agree to maintain the security and secrecy of your Account username and password at all times. Unless otherwise permitted by The Company in writing, you may only possess one Account.
+(2) User Requirements and Conduct.
+You may not authorise third parties to use your Account. You may not assign or otherwise transfer your Account to any other person or entity. You agree to comply with all applicable laws when using the Services, and you may only use the Services for lawful purposes. You will not, in your use of the Services, cause nuisance, annoyance, inconvenience, or property damage, whether to any other party. In certain instances, you may be asked to provide proof of identity to access or use the Services, and you agree that you may be denied access to or use of the Services if you refuse to provide proof of identity.
+You shall not: (i) submit, upload or publish any defamatory, libellous, hateful, violent, obscene, pornographic, unlawful, or otherwise offensive content, (ii) without the prior consent of The Company, publish any commercial or non-commercial advertisements, (iii) infringe any other partys lawful rights, including without limitation intellectual property rights, (iv) transfer the whole The Company bicycle or any part of it to any areas by means other than normal riding whether The Company bicycle is locked or not, (v) user will be responsible for all losses and damages of the app in the event the user does not lock the app.
+(3) Text Messaging.
+By creating an Account, you agree that the Services may send you informational text (SMS) messages as part of the normal business operation of your use of the Services. Should you have questions about receiving text (SMS) messages from The Company, you may contact The Company through sharound.app@gmail.com. You acknowledge that opting out of receiving text (SMS) messages may impact your use of the Services.
+4) Promotional Codes.
+The Company may, in The Companys sole discretion, create promotional codes that may be redeemed for Account credit, or other features or benefits related to the Services, subject to any additional terms that The Company establishes on a per promotional code basis (Promo Codes). You agree that Promo Codes: (i) must be used for the intended audience and purpose, and in a lawful manner; (ii) may not be duplicated, sold or transferred in any manner, or made available to the general public (whether posted to a public form or otherwise), unless expressly permitted by The Company; (iii) may be disabled by The Company at any time for any reason without liability to The Company; (iv) may only be used pursuant to the specific terms that The Company establishes for such Promo Code; (v) are not valid for cash; and (vi) may expire prior to your use. The Company reserves the right to withhold or deduct credits or other features or benefits obtained through the use of Promo Codes by you or any other user in the event that The Company determines or believes that the use or redemption of the Promo Code was in error, fraudulent, illegal, or in violation of the applicable Promo Code terms or these Terms.
+(5) Network Access and Devices.
+You are responsible for obtaining the data network access necessary to use the Services. Your mobile networks data and messaging rates and fees may apply if you access or use the Services from a wireless-enabled device and you shall be responsible for such rates and fees. You are responsible for acquiring and updating compatible hardware or devices necessary to access and use the Services and Applications and any updates thereto. The Company does not guarantee that the Services, or any portion thereof, will function on any particular hardware or devices. In addition, the Services may be subject to malfunctions and delays inherent in the use of the Internet and electronic communications.
+4.	How the system works
+Riders period of app rental begins either when the app is unlocked or at the time the Rider reserves a app with the mobile app. The Rental Period ends when the app is locked at any legal and free locations parking bicycles. Additional fees will apply if the app is not returned and locked to a legal and free location after the Rental Period.
+5.	Payment
+You understand that use of the Services may result in charges to you for the services you receive (Charges). After you have received services obtained through your use of the Service, The Company will facilitate your payment of the applicable Charges. Charges will be inclusive of applicable taxes where required by law.
+The Security Deposit is debited from your payment card as part of the registration process and paid to The Company on the start date of the account. The amount of the Security Deposit is HKD 399 for Hong Kong. The Security Deposit is not held on trust for you. For the avoidance of doubt, nothing in these Terms Conditions constitutes a constructive trust in your favour. The Security Deposit becomes the property of Company, and you agree that the Company is free to use the Security Deposit freely. Any refund of the Security Deposit will be made from the Companys own funds.
+The Security Deposit is refundable when you cancel your subscription, minus any sums due by you to the Company; it takes 1 to 14 days to process the refund.
+You need to recharge, also referred as top-up, before you start using the Services. All Charges are due immediately and payment will be deducted from your wallet from the balance of your Account. You are not able to transfer your credit to the other users. The expiry date for your credit shall be determined by The Companys policy. The Company may from time to time provide certain users with promotional offers and discounts that may result in different amounts charged for the same or similar services or goods obtained through the use of the Services, and you agree that such promotional offers and discounts, unless also made available to you, shall have no bearing on your use of the Services or the Charges applied to you.
+The credit becomes the property of Company. The remaining credit on your account is not refundable in case of cancellation by you, and any credit left on your account will remain the property of the Company.
+6.	Restrictions and other Terms and Conditions of App Use
+Representations and Warranties
+As a condition precedent to the Companys agreement to allow Rider to participate in the Program and to rent a App, Rider represents and warrants to the Company that:
+Rider meets the minimum age requirements: (1) according to the related local jurisdictions age limit. (2) Rider is experienced and familiar with the safe and competent operation of a app, and that he/she is physically and mentally fit to ride the App.
+Rider is familiar with all applicable local, state, and county rules, regulations, codes and laws that relate to the safe and legal operation of a bicycle.
+Acknowledgements and Agreements
+As a condition precedent to the Companys agreement to allow Rider to participate in the Program and to rent a App, Rider acknowledges and agrees as follows:
+	Rider is fully aware that riding a app on streets poses a risk of accident due to motorists, pedestrians, and road conditions, and rider must keep a proper lookout to avoid such accidents.
+	Rider is fully trained and capable of operating and riding a App and is not relying on the Company to learn how to operate or ride a App.
+	Rider is solely responsible for obtaining and using a helmet and protective gear.
+	Rider is solely responsible for operating and riding a App in a careful and reasonably competent manner.
+	A helmet and protective gear, even when used, does not eliminate the risk of actual/ grievous bodily injury in the event of an accident
+	All Apps are and shall remain the exclusive property of the Company at all times.
+	Rider is solely responsible for any traffic violations and/ or fines incurred by Rider while using the App, any fees for parking the App in prohibited locations as accordance with the Laws of the local jurisdiction in operation.
+	The Company is not obligated to provide insurance of any kind related to Rider or Riders use of the App, and in the event that the Company, at its option, carries insurance, Rider shall remain liable for any liability, property damage, personal injury, injury to others, damages, penalties, fines, losses, and/ or expenses of any kind whatsoever.
+	If Rider causes damage to property or injury to another party while operating or in possession of the App, Rider is solely liable for such damage or injury.
+	Rider shall return the App to the Company in the same condition as when received.
+	Rider is liable for any and all damages resulting from improper use or abuse of the App and the cost of such damages.
+	The Company provides Apps as a convenience, and such rental availability is intended to be used only by those persons who are able and qualified to operate a App on their own and who have agreed to all terms and conditions of this Agreement.
+Requirements
+As a condition precedent to the Companys agreement to allow Rider to participate in the Program and to rent a App, Rider shall do the following during any use of a App (Use Requirements):
+	Carefully inspect the App that Rider wishes to rent prior to use to ensure the App is good operating condition,
+	Test the Apps operating components before proceeding with the intended use, including, but not limited to the brakes, tires, pedals, lights, frame and saddle.
+	Promptly notify the Company customer service of any defect, malfunction or needed repair to a App.
+	Adjust App riding behaviour for safe operation according to weather conditions.
+	Adjust App riding behaviour so that it is that of a reasonably experienced and prudent app rider.
+	Contact the Company and local Police immediately in the event of theft of the App or an accident that occurred during Riders use of the App resulting in any bodily injury.
+7.	Dispute Resolution
+Rider agrees that The Company, as its sole discretion, may submit any disputes whatsoever arising out of, resulting from, and / or relating to this Agreement, Riders use of The Companys Equipment, including, without limitation, Apps, and/ or The Company website, to courts in the local jurisdiction. And this Agreement shall be governed by the laws of the local jurisdiction without regard to conflicts of law provisions.
+8.	Indemnification
+Rider shall indemnify, defend and hold harmless The Company for, from and against any and all Claims related to or arising out of This Agreement, including, but no limited to Riders breach of any representation, warranties or covenants set forth in This Agreement, and the rental, maintenance, design, use or operation of the App, the Locks, and/or The Company website, even where caused in whole or in part by The Companys negligence, and / or the negligence of others, whether presently known or unknown. At The Companys option, Rider will assume control of the defence and settlement of any Claim subject to indemnification by Rider (provided that, in such event, The Company may at any time elect to take over control of the defence and settlement of any such Claim). In no event may Rider settle any Claim without The Companys prior written consent.
+9.	Assignment
+The Company may assign its rights and duties under This Agreement to any party(ies) at any time without notice to Rider.
+10.	No Waiver
+The Companys failure to insist upon or enforce strict performance of any provision of This Agreement shall not be construed as a waiver of any provision or right. Neither the course of conduct between the parties nor trade practice shall act to modify any part of This Agreement. No waiver by The Company shall be construed as a waiver of any proceeding or succeeding breach of any provision in This Agreement
+11.	Termination of Agreement
+The Company may terminate This Agreement at any time, without cause, legal process, or notice to the Rider and Riders use of the System is ‘at the will of The Company. Rider waives all claims, causes actions, expenses, and/ or damages connected and/ or related to any such termination. Rider shall not be entitled to a refund of any amount paid for unused rental periods if This Agreement is terminated for cause. Rider may terminate Riders rental plan at any time; provided, however, that no refund will be provided by The Company for time already used by Rider, nor for the credit remaining on Riders account, as per paragraph 5 above.
+12.	Survival
+All provisions of This Agreement relating to limitation and exclusion of liability, waivers, assumption of risk, warranties and indemnification obligations shall survive the termination of This Agreement, and all amounts unpaid at the time of termination or expiration of This Agreement shall remain due and payable.
+13.	Personal Data Protection
+You agree and consent to The Company using and processing your Personal Data for the Purposes and in the manner as identified hereunder.
+For the purposes of This Agreement, ‘Personal Data means information about you, from which you are identifiable, including but not limited to your name, identification card number, birth certificate number, passport number, nationality, address, telephone number, credit or debit card details, race, gender, date of birth, email address, any information about you which you have provided to The Company in registration forms, application forms or any other similar forms and/or any information about you that has been or may be collected, stored, used and processed by The Company from time to time and includes sensitive personal data such as data relating to health, religious or other similar beliefs.
+The provision of your Personal Data is voluntary. However, if you do not provide The Company your Personal Data, your request for the Application maybe incomplete and The Company will not be able to process your Personal Data for the Purposes outlined below and may cause The Company to be unable to allow you to use the Service.
+The Company may use and process your Personal Data for business and activities of The Company which shall include, without limitation the following (the ‘Purpose):
+	To perform The Companys obligations in respect of any contract entered with you;
+	To provide you with any services pursuant to the Terms of Use herein;
+	To process your participation in any events, promotions, activities, focus groups, research studies, contests, promotions, polls, surveys or any productions and to communicate with you regarding your attendance thereto;
+	Process, manage or verify your application for the Service pursuant to the Terms of Use herein;
+	To validate and/ or process payments pursuant to the Terms of Use herein;
+	To develop, enhance and provide what is required pursuant to the Terms of Use herein to meet your needs;
+	To process any refunds, rebates, and or charges pursuant to the Terms of Use herein;
+	To facilitate or enable any checks as may be required pursuant to the Terms of Use herein;
+	To respond to questions, comments, and feedback from you;
+	To communicate with you for any of purposes listed herein;
+	For internal administrative purposes, such as auditing, data analysis, database records;
+	For purposes of detection, prevention and prosecution of crime;
+	For The Company to comply with its obligations under law;
+	To send you alerts, newsletters updates, mailers, promotional materials, special privileges, festive greetings from The Company, its partners, advertisers and/ or sponsors;
+	To notify and invite you to events or activities organised by The Company, its partners, advertisers, and/ or sponsors; and/or
+	To share your Personal Data amongst the companies within the Companys group of companies comprising the subsidiaries, associate companies and/ or jointly controlled entitles of the holding company of the group (the ‘Group) and with The Companys and Groups agents, third party providers, developers, advertisers, partners, event companies or sponsors who may communicate with you for any reasons whatsoever.
+	If you do not consent to The Company processing your Personal Data for any of the Purposes, please notify The Company using the support details as provided in the Application.
+	If any of the Personal Data that you have provided to us changes, for example, if you change your e-mail address, telephone number, payment details of if you wish to cancel your account, please update your details by sending your request to the support contact details as provided in the Application.
+	By submitting your information to The Company, you consent to the use of that information as set out in the form of submission and in the Terms of Use.
+14.	Third Party Interactions
+During use of the Service, you may enter into correspondence with, purchase goods and/or services from, or participate in promotions of third party providers, advertisers or sponsors showing their goods and/or services through the Service, the Software and/or the Application. Any such activity, and any terms, conditions, warranties or representations associated with such activity, is solely between you and the applicable third-party. The Company and its licensors shall have no liability, obligation or responsibility for any such correspondence, purchase, transaction or promotion between you and any such third-party. The Group does not endorse any applications or sites on the Internet that are linked through the Service, the Application and/or the Software, and in no event, shall the Company, its licensors or the Group be responsible for any content, products, services or other materials on or available from such sites or third party providers. The Company provides the Service to you pursuant to the Terms of Use. You recognise, however, that certain third party providers of transportation, goods and/or services may require your agreement to additional or different Terms of Use prior to your use of or access to such goods or services, and the Company is not a party to and disclaims any and all responsibility and/or liability arising from such agreements between you and the third party providers.
+The Company may rely on third party advertising and marketing supplied through the Service and other mechanisms to subsidise the Service and/or to earn additional revenue. By agreeing to the Terms of Use you agree to receive such advertising and marketing. If you do not want to receive such advertising, you should notify us in writing or in accordance with the procedure determined by the Company. The Company reserves the right to charge you a higher fee for or deny you use of the Service should you choose not to receive these advertising services. This higher fee, if applicable, will be posted on the Companys website located at http://www.gobee.app. You agree and allow the Company to compile and release information regarding you and your use of the Service on an anonymous basis as part of a customer profile or similar report or analysis. You agree that it is your responsibility to take all precautions in all actions and interactions with any third party transportation provider, other third party providers, advertisers and/or sponsors you interact with through the Service and/or advertising or marketing material supplied through the Service.
+15.	Customer Support
+If you encounter any problem using the app, you can report it with the APP by clicking customer services. We encourage you to submit your comment. Moreover, you can contact us by email at sharound.app@gmail.com
+16.	Disclaimers; Limitation of Liability; Indemnity.
+(1) DISCLAIMER.
+THE SERVICES ARE PROVIDED AS IS AND AS AVAILABLE. THE COMPANY DISCLAIMS ALL REPRESENTATIONS AND WARRANTIES, EXPRESS, IMPLIED OR STATUTORY, NOT EXPRESSLY SET OUT IN THESE TERMS, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN ADDITION, THE COMPANY MAKES NO REPRESENTATION, WARRANTY, OR GUARANTEE REGARDING THE RELIABILITY, QUALITY, SUITABILITY OR AVAILABILITY OF THE SERVICES OR ANY SERVICES OR GOODS REQUESTED THROUGH THE USE OF THE SERVICES, OR THAT THE SERVICES WILL BE UNINTERRUPTED OR ERROR-FREE. YOU AGREE THAT THE ENTIRE RISK ARISING OUT OF YOUR USE OF THE SERVICES, AND ANY SERVICE OR GOOD REQUESTED IN CONNECTION THEREWITH, REMAINS SOLELY WITH YOU, TO THE MAXIMUM EXTENT PERMITTED UNDER APPLICABLE LAW.
+(2) LIMITATION OF LIABILITY.
+THE COMPANY SHALL NOT BE LIABLE FOR INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, PUNITIVE OR CONSEQUENTIAL DAMAGES, INCLUDING LOST PROFITS, LOST DATA, PERSONAL INJURY OR PROPERTY DAMAGE RELATED TO, IN CONNECTION WITH, OR OTHERWISE RESULTING FROM ANY USE OF THE SERVICES, EXCEPT THOSE RESULTING SOLELY FROM THE FAULTS OF THE COMPANY. THE COMPANY SHALL NOT BE LIABLE FOR ANY DAMAGES, LIABILITY OR LOSSES ARISING OUT OF YOUR USE OF OR RELIANCE ON THE SERVICES OR YOUR INABILITY TO ACCESS OR USE THE SERVICES, EVEN IF THE COMPANY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THE COMPANY SHALL NOT BE LIABLE FOR DELAY OR FAILURE IN PERFORMANCE RESULTING FROM CAUSES BEYOND THE COMPANYS REASONABLE CONTROL.
+THE LIMITATIONS AND DISCLAIMER IN THIS SECTION 6 DO NOT PURPORT TO LIMIT LIABILITY OR ALTER YOUR RIGHTS AS A CONSUMER THAT CANNOT BE EXCLUDED UNDER APPLICABLE LAW.
+(3) Indemnity.
+You agree to indemnify and hold The Company and its officers, directors, employees and agents harmless from any and all claims, demands, losses, liabilities, and expenses (including attorneys fees) arising out of or in connection with: (i) your use of the Services or services or goods obtained through your use of the Services; (ii) your breach or violation of any of these Terms; (iii) your violation of the rights of any third party, including injurers in accidents.
+17.	Governing Law; Arbitration.
+Except as otherwise set forth in these Terms, these Terms shall be exclusively governed by and construed in accordance with the laws of the local jurisdiction.
+18.	Other Provisions
+(1) Notice.
+The Company may give notice by means of a general notice on the Services, or by text (SMS) messages. You may give notice to The Company by writing email to notice@gobee.app.
+(2) General.
+You may not assign or transfer these Terms in whole or in part without The Companys prior written approval. You give your approval to The Company for it to assign or transfer these Terms in whole or in part, including to: (i) a subsidiary or affiliate; (ii) an acquirer of The Companys equity, business or assets; or (iii) a successor by merger. No joint venture, partnership, employment or agency relationship exists between you and The Company as a result of the contract between you and The Company or use of the Services.
+If any provision of these Terms is held to be illegal, invalid or unenforceable, in whole or in part, under any law, such provision or part thereof shall to that extent be deemed not to form part of these Terms but the legality, validity and enforceability of the other provisions in these Terms shall not be affected. In that event, the parties shall replace the illegal, invalid or unenforceable provision or part thereof with a provision or part thereof that is legal, valid and enforceable and that has, to the greatest extent possible, a similar effect as the illegal, invalid or unenforceable provision or part thereof, given the contents and purpose of these Terms. These Terms constitute the entire agreement and understanding of the parties with respect to its subject matter and replaces and supersedes all prior or contemporaneous agreements or undertakings regarding such subject matter. In these Terms, the words including and include mean including, but not limited to.
+
+
+</string>
+    <string name="title_activity_main4">Main4Activity</string>
+    <string name="title_activity_myitemdetail">MyitemdetailAct</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

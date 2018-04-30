@@ -10,7 +10,9 @@
         android:id="@+id/menu_add_items"
         android:title="@string/add_random_items" />
     <item
-        android:id="@+id/add"
-        android:title="Item" />
+        android:id="@+id/menu_myitem"
+
+        android:title="@string/my_item" />
+
 
 </menu>

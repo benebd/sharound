@@ -203,7 +203,7 @@ public class navAct extends AppCompatActivity
             if (shouldStartSignIn()) {
                 startSignIn();
             }else{
-                Intent intent = new Intent(this,Main2Activity.class);
+                Intent intent = new Intent(this,AddPhotoActivity.class);
                 startActivity(intent);
             }
         }

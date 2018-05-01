@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this,AddPhotoActivity.class);
                 startActivity(intent);
             }
         });
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
-        // Get ${LIMIT} restaurants
+        // Get ${LIMIT} item
         mQuery = mFirestore.collection("items")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(LIMIT);
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements
         switch (item.getItemId()) {
             case R.id.menu_add_items:
                // onAddItemsClicked();
-                Intent intent1 = new Intent(MainActivity.this,Main4Activity.class);
+                Intent intent1 = new Intent(MainActivity.this,MyItemActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.menu_sign_out:
@@ -183,11 +183,11 @@ public class MainActivity extends AppCompatActivity implements
                 startSignIn();
                 break;
             case R.id.add:
-                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this,AddPhotoActivity.class);
                 startActivity(intent);
                 break;
             case R.id.menu_myitem:
-                Intent intent2 = new Intent(this,Main4Activity.class);
+                Intent intent2 = new Intent(this,MyItemActivity.class);
                 startActivity(intent2);
         }
         return super.onOptionsItemSelected(item);

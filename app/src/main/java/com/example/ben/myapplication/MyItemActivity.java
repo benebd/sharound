@@ -3,7 +3,6 @@ package com.example.ben.myapplication;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
@@ -11,23 +10,15 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.example.ben.myapplication.FilterDialogFragment;
-import com.example.ben.myapplication.Filters;
-import com.example.ben.myapplication.ItemDetailActivity;
-import com.example.ben.myapplication.Main2Activity;
-import com.example.ben.myapplication.R;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
@@ -55,11 +46,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Main4Activity extends AppCompatActivity implements
+public class MyItemActivity extends AppCompatActivity implements
 
         ItemAdapter.OnItemSelectedListener {
 
-    private static final String TAG = "Main4Activity";
+    private static final String TAG = "MyItemActivity";
 
     private static final int RC_SIGN_IN = 9001;
 
@@ -94,7 +85,7 @@ public class Main4Activity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(com.example.ben.myapplication.Main4Activity.this,Main2Activity.class);
+                Intent intent = new Intent(MyItemActivity.this,AddPhotoActivity.class);
                 startActivity(intent);
             }
         });
@@ -192,7 +183,7 @@ public class Main4Activity extends AppCompatActivity implements
                 startSignIn();
                 break;
             case R.id.add:
-                Intent intent = new Intent(this,Main2Activity.class);
+                Intent intent = new Intent(this,AddPhotoActivity.class);
                 startActivity(intent);
                 break;
 

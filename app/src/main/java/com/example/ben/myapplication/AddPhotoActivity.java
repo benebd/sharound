@@ -5,14 +5,9 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -22,17 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ben.myapplication.model.Item;
 import com.example.ben.myapplication.viewmodel.MainActivityViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -40,14 +30,13 @@ import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
 import java.util.Collections;
-import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Main2Activity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener{
-    private static final String TAG = "Main2Activity";
+public class AddPhotoActivity extends AppCompatActivity implements ChangePhotoDialog.OnPhotoReceivedListener{
+    private static final String TAG = "AddPhotoActivity";
 
     private static final int RC_SIGN_IN = 9001;
 
@@ -225,7 +214,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
                 startSignIn();
                 break;
             case R.id.add:
-                Intent intent = new Intent(this, Main2Activity.class);
+                Intent intent = new Intent(this, AddPhotoActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -296,7 +285,7 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
 
     public void addPage(){
         Log.d(TAG, "addPage:" + mDownloadUrl);
-        Intent intent = new Intent(this,Main3Activity.class);
+        Intent intent = new Intent(this,AddItemDetailActivity.class);
         intent.putExtra("uri",mDownloadUrl.toString());
         if(mSelectedImageUri != null){
             intent.putExtra("selecturi",mSelectedImageUri.toString());
@@ -313,12 +302,12 @@ public class Main2Activity extends AppCompatActivity implements ChangePhotoDialo
     public void addItem(Uri uri) {
 
 
-        Intent intent = new Intent(this,Main3Activity.class);
+        Intent intent = new Intent(this,AddItemDetailActivity.class);
         startActivity(intent);
-        startActivity(new Intent(this,Main3Activity.class)
-                .putExtra(Main3Activity.UPLOAD_URI, uri));
-        startActivity(new Intent(this,Main3Activity.class)
-                .putExtra(Main3Activity.UPLOAD_URI, uri));
+        startActivity(new Intent(this,AddItemDetailActivity.class)
+                .putExtra(AddItemDetailActivity.UPLOAD_URI, uri));
+        startActivity(new Intent(this,AddItemDetailActivity.class)
+                .putExtra(AddItemDetailActivity.UPLOAD_URI, uri));
 
         uploadFromUri(mSelectedImageUri);
         if(mTakeImageUri != null){

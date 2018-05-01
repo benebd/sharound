@@ -25,8 +25,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class Main3Activity extends AppCompatActivity {
-    private static final String TAG = "Main3Activity";
+public class AddItemDetailActivity extends AppCompatActivity {
+    private static final String TAG = "AddItemDetailActivity";
 
     public String uploadUri;
     public String takeUri;

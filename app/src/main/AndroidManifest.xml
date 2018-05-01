@@ -27,7 +27,7 @@
             android:name=".ItemDetailActivity"
             android:theme="@style/AppTheme.Activity" />
         <activity
-            android:name=".Main2Activity"
+            android:name=".AddPhotoActivity"
             android:theme="@style/AppTheme.Activity" />
 
         <service
@@ -35,7 +35,7 @@
             android:exported="true" />
 
         <activity
-            android:name=".Main3Activity"
+            android:name=".AddItemDetailActivity"
             android:label="@string/title_activity_main3"
             android:theme="@style/AppTheme" />
         <activity
@@ -69,7 +69,7 @@
             android:theme="@style/AppTheme" />
         <activity android:name=".termsAct" />
         <activity
-            android:name=".Main4Activity"
+            android:name=".MyItemActivity"
             android:label="@string/title_activity_main4"
             android:theme="@style/AppTheme">
 

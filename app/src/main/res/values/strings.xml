@@ -252,4 +252,5 @@ If any provision of these Terms is held to be illegal, invalid or unenforceable,
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_like_item">LikeItemActivity</string>
 </resources>

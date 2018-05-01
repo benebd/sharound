@@ -206,7 +206,7 @@ public class AddPhotoActivity extends AppCompatActivity implements ChangePhotoDi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_add_items:
+            case R.id.menu_want_items:
                 // onAddItemsClicked();
                 break;
             case R.id.menu_sign_out:
@@ -217,6 +217,10 @@ public class AddPhotoActivity extends AppCompatActivity implements ChangePhotoDi
                 Intent intent = new Intent(this, AddPhotoActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.menu_all_item:
+                Intent intent1 =new Intent(this,MainActivity.class);
+                startActivity(intent1);
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -298,99 +302,14 @@ public class AddPhotoActivity extends AppCompatActivity implements ChangePhotoDi
 
 
     }
-    /*
-    public void addItem(Uri uri) {
-
-
-        Intent intent = new Intent(this,AddItemDetailActivity.class);
-        startActivity(intent);
-        startActivity(new Intent(this,AddItemDetailActivity.class)
-                .putExtra(AddItemDetailActivity.UPLOAD_URI, uri));
-        startActivity(new Intent(this,AddItemDetailActivity.class)
-                .putExtra(AddItemDetailActivity.UPLOAD_URI, uri));
-
-        uploadFromUri(mSelectedImageUri);
-        if(mTakeImageUri != null){
-
-           uploadFromUri(mTakeImageUri);}
-            //uri=mTakeImageUri;
-         if(mSelectedImageUri != null){
-            //uri=mSelectedImageUri;
-
-            uploadFromUri(mSelectedImageUri);
-        }
-        Log.d(TAG, "uploadFromUri:onSuccessup4" + sdownLoadUri);
-        Log.d(TAG, "uploadFromUri:onSuccessadd"+mSelectedImageUri);
-        Log.d(TAG, "uploadFromUri:onSuccess2"+mDownloadUrl );
-        Log.d(TAG, "uploadFromUri:onSuccess23"+mDownloadUrl2 );
-        Log.d(TAG, "onUploadResultIntent:" +  sdownLoadUri);
-        item.setName(mname.getText().toString());
-        item.setLocation(mcity.getText().toString());
-        item.setCategory(mcat.getText().toString());
-        //item.setPhoto(mDownloadUrl.toString());
-        item.setPrice(1);
-        item.setNumRatings(1);
-        //item.setUsername( FirebaseAuth.getInstance().getCurrentUser().toString());
-        //item.setUserid();
-        //item.setPrice(Integer.parseInt(mprice.toString()));
-        //item.setNumRatings(Integer.parseInt(mrating.toString()));
-
-
-/*
-        // [START_EXCLUDE]
-
-
-        // [END_EXCLUDE]
-
-        // [START get_child_ref]
-        // Get a reference to store file at photos/<FILENAME>.jpg
-        final StorageReference photoRef = mStorageRef.child("photos")
-                .child(uri.getLastPathSegment());
-        // [END get_child_ref]
-
-        // Upload file to Firebase Storage
-        Log.d(TAG, "uploadFromUri:dst:" + photoRef.getPath());
-        photoRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // Upload succeeded
-                Log.d(TAG, "uploadFromUri:onSuccess");
-
-                // Get the public download URL
-                Uri downloadUri = taskSnapshot.getMetadata().getDownloadUrl();
-                mDownloadUrl2 = downloadUri;
-                sdownLoadUri = mDownloadUrl2.toString();
-                item.setPhoto(sdownLoadUri);
-                Log.d(TAG, "uploadFromUri:onSuccessup" + downloadUri);
-                // [START_EXCLUDE]
-
-
-                Log.d(TAG, "uploadFromUri:onSuccessup2" + mDownloadUrl2);
-                sdownLoadUri = mDownloadUrl2.toString();
-                Log.d(TAG, "uploadFromUri:onSuccessup3" + sdownLoadUri);
-                // [END_EXCLUDE]
-
-            }
-        });
-
-        mRestaurantRef.set(item);
-        setEditingEnabled(false);
-        Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
-
-        setEditingEnabled(true);
-       // finish();
 
 
 
 
-    }*/
+
     private void uploadFromUrit(final Uri fileUri) {
         Log.d(TAG, "uploadFromUri:src:" + fileUri.toString());
 
-        // [START_EXCLUDE]
-        //taskStarted();
-       // showProgressNotification(getString(R.string.progress_uploading), 0, 0);
-        // [END_EXCLUDE]
 
         // [START get_child_ref]
         // Get a reference to store file at photos/<FILENAME>.jpg
@@ -419,10 +338,7 @@ public class AddPhotoActivity extends AppCompatActivity implements ChangePhotoDi
                         mDownloadUrl = taskSnapshot.getMetadata().getDownloadUrl();
                         Log.d(TAG, "uploadFromUri:onSuccess"+mDownloadUrl);
                         // [START_EXCLUDE]
-                        // broadcastUploadFinished(downloadUri, fileUri);
-                        //broadcastUploadFinished(downloadUri, downloadUri);
-                       // showUploadFinishedNotification(downloadUri, fileUri);
-                        //taskCompleted();
+
                         // [END_EXCLUDE]
                     }
                 })
@@ -432,11 +348,7 @@ public class AddPhotoActivity extends AppCompatActivity implements ChangePhotoDi
                         // Upload failed
                         Log.w(TAG, "uploadFromUri:onFailure", exception);
 
-                        // [START_EXCLUDE]
-                       // broadcastUploadFinished(null, fileUri);
-                        //showUploadFinishedNotification(null, fileUri);
-                        //taskCompleted();
-                        // [END_EXCLUDE]
+
                     }
                 });
     }

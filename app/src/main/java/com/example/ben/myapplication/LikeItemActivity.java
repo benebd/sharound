@@ -46,11 +46,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MyItemActivity extends AppCompatActivity implements
+public class LikeItemActivity extends AppCompatActivity implements
 
         ItemAdapter.OnItemSelectedListener {
 
-    private static final String TAG = "MyItemActivity";
+    private static final String TAG = "LikeItemActivity";
 
     private static final int RC_SIGN_IN = 9001;
 
@@ -73,19 +73,19 @@ public class MyItemActivity extends AppCompatActivity implements
 
     private MainActivityViewModel mViewModel;
 
-   // FirebaseUser user;
+    // FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main4);
+        setContentView(R.layout.activity_like_item);
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MyItemActivity.this,AddPhotoActivity.class);
+                Intent intent = new Intent(LikeItemActivity.this,AddPhotoActivity.class);
                 startActivity(intent);
             }
         });
@@ -97,19 +97,20 @@ public class MyItemActivity extends AppCompatActivity implements
 
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
-       //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        //FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         // Get ${LIMIT} restaurants
         //user.getUid()..whereEqualTo("userid", user.getUid())
         //if(user != null) {
-      //
-     //  Log.d(TAG, "Write batch succeeded.");
+        //
+        //  Log.d(TAG, "Write batch succeeded.");
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String sUser =user.getUid();
         Log.d(TAG,"userid1"+sUser);
-            mQuery = mFirestore.collection("items").whereEqualTo("userid", user.getUid())
-                    .orderBy("timestamp", Query.Direction.DESCENDING)
-                    .limit(LIMIT);
-       // }
+      //  mLikeRef = mFirestore.collection("likeitem")
+        mQuery = mFirestore.collection("likeitem").document(user.getUid()).collection("items")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(LIMIT);
+        // }
         // RecyclerView
         mAdapter = new ItemAdapter(mQuery, this) {
             @Override
@@ -191,9 +192,11 @@ public class MyItemActivity extends AppCompatActivity implements
             case R.id.menu_myitem:
                 Intent intent2 = new Intent(this,MyItemActivity.class);
                 startActivity(intent2);
+                break;
             case R.id.menu_all_item:
                 Intent intent3 =new Intent(this,MainActivity.class);
                 startActivity(intent3);
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -295,8 +298,8 @@ public class MyItemActivity extends AppCompatActivity implements
         startActivityForResult(intent, RC_SIGN_IN);
         mViewModel.setIsSigningIn(true);
         //user =FirebaseAuth.getInstance().getCurrentUser();
-       // String sUser =user.getUid();
-      //  Log.d(TAG,"userid2"+sUser);
+        // String sUser =user.getUid();
+        //  Log.d(TAG,"userid2"+sUser);
     }
 
     private void onAddItemsClicked() {

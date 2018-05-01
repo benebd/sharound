@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -49,7 +53,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity implements
         FilterDialogFragment.FilterListener,
-        ItemAdapter.OnItemSelectedListener {
+        ItemAdapter.OnItemSelectedListener,NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
 
@@ -87,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,9 +178,10 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_add_items:
+
+            case R.id.menu_want_items:
                // onAddItemsClicked();
-                Intent intent1 = new Intent(MainActivity.this,MyItemActivity.class);
+                Intent intent1 = new Intent(MainActivity.this,LikeItemActivity.class);
                 startActivity(intent1);
                 break;
             case R.id.menu_sign_out:
@@ -232,6 +238,7 @@ public class MainActivity extends AppCompatActivity implements
         Intent intent = new Intent(this, ItemDetailActivity.class);
         intent.putExtra(ItemDetailActivity.KEY_ITEM_ID, restaurant.getId());
        intent.putExtra(ItemDetailActivity.KEY_ITEM_UID,restaurant.getString("userid"));
+      // intent.putExtra(ItemDetailActivity.KEY_ITEM,restaurant.getData());
        String testid =restaurant.getString("userid");
        Log.d(TAG,"OnitemSeclet"+testid);
         startActivity(intent);
@@ -344,5 +351,34 @@ public class MainActivity extends AppCompatActivity implements
                 }).create();
 
         dialog.show();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            if (shouldStartSignIn()) {
+                startSignIn();
+            }else{
+                Intent intent = new Intent(this,AddPhotoActivity.class);
+                startActivity(intent);
+            }
+        }
+        else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent(this,navAct.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_manage) {}
+        else if (id == R.id.nav_share) {}
+        else if (id == R.id.nav_send) {}
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

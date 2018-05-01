@@ -19,7 +19,7 @@
             android:layout_height="200dp"
             android:alpha="1.0"
             android:scaleType="centerCrop"
-            tools:src="@drawable/food_1" />
+             />
 
         <View
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
             android:layout_marginTop="8dp"
             android:textColor="@android:color/white"
             android:textStyle="bold"
-            tools:text="Some Restaurant" />
+            tools:text="Some Item" />
 
         <me.zhanghai.android.materialratingbar.MaterialRatingBar
             android:id="@+id/item_rating"
@@ -136,8 +136,21 @@
         android:layout_marginBottom="-28dp"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/fab_show_rating_dialog"
-        android:visibility="gone"
+        android:visibility ="gone"
         app:srcCompat="@android:drawable/ic_delete" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_show_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/item_top_card"
+
+        android:layout_marginBottom="-28dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/fab_show_delete"
+
+        app:rippleColor="@color/colorPrimary"
+        app:srcCompat="@drawable/mrb_star_border_icon_black_36dp" />
     <!-- Ratings -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_ratings"

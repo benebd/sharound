@@ -224,8 +224,18 @@ public class navAct extends AppCompatActivity
     }
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
         mMap = googleMap;
         mMap.setOnMarkerClickListener(mMapListener);
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener(){
+            @Override
+            public void onInfoWindowClick(Marker arg0) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                //intent.putExtra(ItemDetailActivity.KEY_ITEM, "4RAqFEtdaoyVw1zukXG0");
+                startActivity(intent);
+            }
+        });
     }
     private void genLocation() {
         for (int i = 0; i < 10; i++) {

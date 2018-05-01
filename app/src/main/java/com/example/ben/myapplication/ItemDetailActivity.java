@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.ben.myapplication.adapter.RatingAdapter;
@@ -45,7 +46,8 @@ public class ItemDetailActivity extends AppCompatActivity
     private static final String TAG = "ItemDetail";
 
     public static final String KEY_ITEM_ID = "key_item_id";
-    public static final String KEY_ITEM_UID ="key_item_uid";
+    public static final String KEY_ITEM_UID = "key_item_uid";
+    public static final String KEY_ITEM = "key_item";
     @BindView(R.id.item_image)
     ImageView mImageView;
 
@@ -79,10 +81,13 @@ public class ItemDetailActivity extends AppCompatActivity
     private RatingDialogFragment mRatingDialog;
 
     private FirebaseFirestore mFirestore;
-    private DocumentReference mRestaurantRef;
+    private DocumentReference mItemRef;
+    private DocumentReference mLikeRef;
     private ListenerRegistration mRestaurantRegistration;
 
     private RatingAdapter mRatingAdapter;
+    String itemid;
+    Item item;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,25 +98,30 @@ public class ItemDetailActivity extends AppCompatActivity
 
         // Get item ID from extras
 
-        String itemid = getIntent().getExtras().getString(KEY_ITEM_ID);
-        String itemUid =getIntent().getExtras().getString(KEY_ITEM_UID);
-        Log.d(TAG,"onCreateitemid"+itemid);
-        Log.d(TAG,"onCreateitemUid"+itemUid);
+        itemid = getIntent().getExtras().getString(KEY_ITEM_ID);
+        String itemUid = getIntent().getExtras().getString(KEY_ITEM_UID);
+        String mItemid = getIntent().getExtras().getString(KEY_ITEM);
+
+        Log.d(TAG, "onCreateitemid" + itemid);
+        Log.d(TAG, "onCreateitemUid" + itemUid);
         if (itemid == null) {
             throw new IllegalArgumentException("Must pass extra " + KEY_ITEM_ID);
         }
-       String userid = user.getUid();
-         if (userid .equals(itemUid) ){
-        fabShowDelete.setVisibility(View.VISIBLE);}
-        Log.d(TAG,"onCreateitemUid2"+userid);
+        String userid = user.getUid();
+        if (userid.equals(itemUid)) {
+            fabShowDelete.setVisibility(View.VISIBLE);
+        }
+        Log.d(TAG, "onCreateitemUid2" + userid);
 
         mFirestore = FirebaseFirestore.getInstance();
 
         // Get reference to the item
-        mRestaurantRef = mFirestore.collection("items").document(itemid);
+        if(mItemid != null)mItemRef = mFirestore.collection("items").document(mItemid);
+        if(itemid !=null)mItemRef = mFirestore.collection("items").document(itemid);
 
+        if(itemid !=null)mLikeRef = mFirestore.collection("likeitem").document(userid).collection("items").document(itemid);
         // Get ratings
-        Query ratingsQuery = mRestaurantRef
+        Query ratingsQuery = mItemRef
                 .collection("ratings")
                 .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(50);
@@ -140,7 +150,7 @@ public class ItemDetailActivity extends AppCompatActivity
         super.onStart();
 
         mRatingAdapter.startListening();
-        mRestaurantRegistration = mRestaurantRef.addSnapshotListener(this);
+        mRestaurantRegistration = mItemRef.addSnapshotListener(this);
     }
 
     @Override
@@ -162,7 +172,7 @@ public class ItemDetailActivity extends AppCompatActivity
     }
 
     /**
-     * Listener for the Item document ({@link #mRestaurantRef}).
+     * Listener for the Item document ({@link #mItemRef}).
      */
     @Override
     public void onEvent(DocumentSnapshot snapshot, FirebaseFirestoreException e) {
@@ -170,10 +180,13 @@ public class ItemDetailActivity extends AppCompatActivity
             Log.w(TAG, "item:onEvent", e);
             return;
         }
-
+        item =snapshot.toObject(Item.class);
         onRestaurantLoaded(snapshot.toObject(Item.class));
     }
 
+    private Item returnItem(Item item){
+        return  item;
+    }
     private void onRestaurantLoaded(Item item) {
         mNameView.setText(item.getName());
         mRatingIndicator.setRating((float) item.getAvgRating());
@@ -188,6 +201,11 @@ public class ItemDetailActivity extends AppCompatActivity
                 .into(mImageView);
     }
 
+    private void addLikeItem(Item item){
+
+        mLikeRef.set(item);
+    }
+
     @OnClick(R.id.item_button_back)
     public void onBackArrowClicked(View view) {
         onBackPressed();
@@ -198,10 +216,26 @@ public class ItemDetailActivity extends AppCompatActivity
         mRatingDialog.show(getSupportFragmentManager(), RatingDialogFragment.TAG);
     }
 
+    @OnClick(R.id.fab_show_delete)
+    public void onViewClicked() {
+        Log.d(TAG, "delete" + itemid);
+        mFirestore.collection("items").document(itemid).delete();
+        Toast.makeText(this, "successful delete", Toast.LENGTH_LONG);
+        //  mItemRef.document(itemid).delete();
+        DeleteDialog dialog = new DeleteDialog();
+        dialog.show(getSupportFragmentManager(), getString(R.string.dialog_change_photo));
+    }
+
+    @OnClick(R.id.fab_show_like)
+    public void onLikeViewClicked() {
+        addLikeItem(item);
+        Toast.makeText(this,"Liked",Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onRating(Rating rating) {
         // In a transaction, add the new rating and update the aggregate totals
-        addRating(mRestaurantRef, rating)
+        addRating(mItemRef, rating)
                 .addOnSuccessListener(this, new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -255,6 +289,7 @@ public class ItemDetailActivity extends AppCompatActivity
         });
     }
 
+
     private void hideKeyboard() {
         View view = getCurrentFocus();
         if (view != null) {
@@ -262,4 +297,7 @@ public class ItemDetailActivity extends AppCompatActivity
                     .hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
+
+
 }

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -15,6 +16,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ben.myapplication.model.Item;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -27,16 +33,15 @@ import butterknife.OnClick;
 
 public class AddItemDetailActivity extends AppCompatActivity {
     private static final String TAG = "AddItemDetailActivity";
-
+    double lo ;
+    double la ;
     public String uploadUri;
     public String takeUri;
     public String selectUri;
-
     private FirebaseFirestore mFirestore;
-    private DocumentReference mRestaurantRef;
+    private DocumentReference mItemRef;
     Item item = new Item();
-
-
+    int PLACE_PICKER_REQUEST = 1;
     @BindView(R.id.profile_image)
     ImageView profileImage;
     @BindView(R.id.inname)
@@ -44,24 +49,13 @@ public class AddItemDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.spinner2)
     Spinner spinner2;
-
-
-
     @BindView(R.id.spinner)
     Spinner spinner;
-
-
-
     @BindView(R.id.add)
     Button add;
     @BindView(R.id.image)
     RelativeLayout image;
-
     //Location
-    @BindView(R.id.E_latitude)
-    EditText ELatitude;
-    @BindView(R.id.E_longitude)
-    EditText ELongitude;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,21 +65,17 @@ public class AddItemDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mFirestore = FirebaseFirestore.getInstance();
-        mRestaurantRef = mFirestore.collection("items").document();
+        mItemRef = mFirestore.collection("items").document();
 
 
-        //  Uri fileUri = null;
-        // Bundle extras = getIntent().getExtras();
-        // fileUri=Uri.parse(extras.getString("uri"));
+
         Intent intent = getIntent();
         uploadUri = intent.getStringExtra("uri");
         takeUri = intent.getStringExtra("takeuri");
         selectUri = intent.getStringExtra("selecturi");
         Log.d(TAG, "Main3Activitys" + selectUri);
         Log.d(TAG, "Main3Activityt" + takeUri);
-        //Intent intent = new Intent();
-        // Uri fileUri = intent.getParcelableExtra(UPLOAD_URI);
-        // intent,getString
+
         Log.d(TAG, "Main3activity" + uploadUri);
         if (selectUri != null) {
             // Uri.parse(selectUri);
@@ -104,45 +94,57 @@ public class AddItemDetailActivity extends AppCompatActivity {
         }
     }
 
+    public void goPlacePicker(View view){
+        PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+        try{
+            startActivityForResult(builder.build(AddItemDetailActivity.this),PLACE_PICKER_REQUEST);
+        }catch(GooglePlayServicesRepairableException e){
+            e.printStackTrace();
+        }catch (GooglePlayServicesNotAvailableException e){
+            e.printStackTrace();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if(requestCode == PLACE_PICKER_REQUEST){
+            Place place = PlacePicker.getPlace(AddItemDetailActivity.this, data);
+            LatLng latlng = place.getLatLng();
+            la = latlng.latitude;
+             lo = latlng.longitude;
+        }
+    }
     @OnClick(R.id.add)
     public void onViewClicked() {
         addItem();
     }
 
     public void addItem() {
-
+        Double dLongitude =null;
+        Double dLatitude=null;
         Log.d(TAG, "M3additem" + uploadUri);
         String selectedCat = (String) spinner.getSelectedItem();
         String selectedCity = (String) spinner2.getSelectedItem();
-        mRestaurantRef = mFirestore.collection("items").document();
+        mItemRef = mFirestore.collection("items").document();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         String userName = user.getDisplayName();
         String userid = user.getUid();
 
+//        if(sLatitude != null || sLongitude != null){
+//            dLongitude = Double.parseDouble(sLongitude);
+//         dLatitude = Double.parseDouble(sLatitude);}
         item.setName(inname.getText().toString());
         item.setLocation(selectedCity);
         item.setCategory(selectedCat);
         item.setPhoto(uploadUri);
-       // item.setPrice(1);
-       // item.setNumRatings(1);
         item.setUsername(userName);
         item.setUserid(userid);
-        //item.setLatitude(Double.parseDouble(ELatitude.getText().toString()));
-        //item.setLongitude(Double.parseDouble(ELongitude.getText().toString()));
-        item.setLongitude(1);
-        item.setLatitude(1);
-        //item.setPrice(Integer.parseInt(mprice.toString()));
-        //item.setNumRatings(Integer.parseInt(mrating.toString()));
+        item.setLongitude(lo);
+        item.setLatitude(la);
+        mItemRef.set(item);
 
-
-
-        mRestaurantRef.set(item);
-        // setEditingEnabled(false);
         Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
 
-
         finish();
-
 
     }
 

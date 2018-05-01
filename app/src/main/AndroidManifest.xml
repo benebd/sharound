@@ -84,6 +84,10 @@
         <activity
             android:name=".MyitemdetailAct"
             android:label="@string/title_activity_myitemdetail"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".LikeItemActivity"
+            android:label="@string/title_activity_like_item"
             android:theme="@style/AppTheme"></activity>
     </application>
 

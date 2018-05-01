@@ -101,7 +101,7 @@ public class ItemDetailActivity extends AppCompatActivity
             throw new IllegalArgumentException("Must pass extra " + KEY_ITEM_ID);
         }
        String userid = user.getUid();
-         if (user.getUid() == itemUid){
+         if (userid .equals(itemUid) ){
         fabShowDelete.setVisibility(View.VISIBLE);}
         Log.d(TAG,"onCreateitemUid2"+userid);
 

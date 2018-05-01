@@ -1,9 +1,12 @@
 package com.example.ben.myapplication;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,68 +24,22 @@ import me.zhanghai.android.materialratingbar.MaterialRatingBar;
  * Dialog Fragment containing rating form.
  */
 public class DeleteDialog extends DialogFragment {
-
-    public static final String TAG = "RatingDialog";
-
-    @BindView(R.id.restaurant_form_rating)
-    MaterialRatingBar mRatingBar;
-
-    @BindView(R.id.restaurant_form_text)
-    EditText mRatingText;
-
-    interface RatingListener {
-
-        void onRating(Rating rating);
-
-    }
-
-    private RatingListener mRatingListener;
-
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.dialog_rating, container, false);
-        ButterKnife.bind(this, v);
-
-        return v;
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-
-        if (context instanceof RatingListener) {
-            mRatingListener = (RatingListener) context;
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        getDialog().getWindow().setLayout(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
-    }
-
-    @OnClick(R.id.restaurant_form_button)
-    public void onSubmitClicked(View view) {
-        Rating rating = new Rating(
-                FirebaseAuth.getInstance().getCurrentUser(),
-                mRatingBar.getRating(),
-                mRatingText.getText().toString());
-
-        if (mRatingListener != null) {
-            mRatingListener.onRating(rating);
-        }
-
-        dismiss();
-    }
-
-    @OnClick(R.id.restaurant_form_cancel)
-    public void onCancelClicked(View view) {
-        dismiss();
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        // Use the Builder class for convenient dialog construction
+//        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+//        builder.setMessage(R.string.dialog_fire_missiles)
+//                .setPositiveButton(R.string.fire, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // FIRE ZE MISSILES!
+//                    }
+//                })
+//                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+//                    public void onClick(DialogInterface dialog, int id) {
+//                        // User cancelled the dialog
+//                    }
+//                });
+//        // Create the AlertDialog object and return it
+//        return builder.create();
     }
 }

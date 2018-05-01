@@ -136,8 +136,8 @@
         android:layout_marginBottom="-28dp"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/fab_show_rating_dialog"
-        app:srcCompat="@drawable/ic_add_white_24px"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        app:srcCompat="@android:drawable/ic_delete" />
     <!-- Ratings -->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_ratings"

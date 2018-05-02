@@ -193,9 +193,13 @@ public class LikeItemActivity extends AppCompatActivity implements
                 Intent intent2 = new Intent(this,MyItemActivity.class);
                 startActivity(intent2);
                 break;
-            case R.id.menu_all_item:
-                Intent intent3 =new Intent(this,MainActivity.class);
+            case R.id.menu_map:
+                Intent intent3 =new Intent(this,navAct.class);
                 startActivity(intent3);
+                break;
+            case R.id.menu_all_item:
+                Intent intent4 =new Intent(this,MainActivity.class);
+                startActivity(intent4);
                 break;
         }
         return super.onOptionsItemSelected(item);

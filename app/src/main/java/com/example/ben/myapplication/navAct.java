@@ -69,9 +69,10 @@ public class navAct extends AppCompatActivity
     double longitudeMax = 114.3;
 
     Random r = new Random();
-    double [] rlat_array = new double[10];
-    double [] rlong_array = new double[10];
+    double [] rlat_array = new double[20];
+    double [] rlong_array = new double[20];
     String[] item_array = {"物品A","物品B","物品C","物品D","物品E","物品F","物品G","物品H","物品I","物品J"};
+    String titem_array[] =new String[20];
 
     FirebaseFirestore mFirestore;
 
@@ -93,34 +94,35 @@ public class navAct extends AppCompatActivity
         //Log.d(TAG,"tid"+id);
         //ApiFuture<DocumentSnapshot> future =docRef.get();
 
-        mFirestore.collection("items")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                int i =0;
-
-                                String titem_array[] =new String[10];
-                                titem_array [i] = document.getString("name");
-                                rlat_array[i] = document.getDouble("latitude");
-                                rlong_array[i] = document.getDouble("longitude");
-                                //titem_array[i] = document.;
-
-
-                                Log.d(TAG,"rlat_array[i]"+rlat_array[i]);
-                                Log.d(TAG,"rlong_array[i]"+rlong_array[i]);
-                                Log.d(TAG,"titem_array[i]"+titem_array[i]);
-                                i++;
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-
+//        mFirestore.collection("items")
+//                .get()
+//                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                        if (task.isSuccessful()) {
+//                            int i =0;
+//                            for (QueryDocumentSnapshot document : task.getResult()) {
+//                                Log.d(TAG, document.getId() + " => " + document.getData());
+//
+//
+//
+//                                titem_array [i] = document.getString("name");
+//                                rlat_array[i] = document.getDouble("latitude");
+//                                rlong_array[i] = document.getDouble("longitude");
+//                                //titem_array[i] = document.;
+//
+//
+//                                Log.d(TAG,"rlat_array[i]Create"+i+rlat_array[i]);
+//                                Log.d(TAG,"rlong_array[i]Create"+i+rlong_array[i]);
+//                                Log.d(TAG,"titem_array[i]Create"+i+titem_array[i]);
+//                                i++;
+//                            }
+//                        } else {
+//                            Log.d(TAG, "Error getting documents: ", task.getException());
+//                        }
+//                    }
+//                });
+//
 //        mFirestore.collection("items").addSnapshotListener(new EventListener<QuerySnapshot>() {
 //            @Override
 //            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
@@ -132,9 +134,9 @@ public class navAct extends AppCompatActivity
 //                        String titem_array[] =new String[10];
 //                        titem_array[i] = dc.getDocument().getString("name");
 //                        i++;
-//                        Log.d(TAG,"rlat_array[i]"+rlat_array[i]);
-//                        Log.d(TAG,"rlong_array[i]"+rlong_array[i]);
-//                        Log.d(TAG,"titem_array[i]"+titem_array[i]);
+//                        Log.d(TAG,"rlat_array[i]item"+i+rlat_array[i]);
+//                        Log.d(TAG,"rlong_array[i]item"+i+rlong_array[i]);
+//                        Log.d(TAG,"titem_array[i]item"+i+titem_array[i]);
 //
 //                    }
 //                }
@@ -180,6 +182,34 @@ public class navAct extends AppCompatActivity
         }
         //check the network provider is enabled
         if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
+
+            mFirestore.collection("items")
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    Log.d(TAG, document.getId() + " => " + document.getData());
+                                    int i =0;
+
+
+                                    titem_array [i] = document.getString("name");
+                                    rlat_array[i] = document.getDouble("latitude");
+                                    rlong_array[i] = document.getDouble("longitude");
+                                    //titem_array[i] = document.;
+
+
+                                    Log.d(TAG,"rlat_array[i]Start"+i+rlat_array[i]);
+                                    Log.d(TAG,"rlong_array[i]Start"+i+rlong_array[i]);
+                                    Log.d(TAG,"titem_array[i]Start"+i+titem_array[i]);
+                                    i++;
+                                }
+                            } else {
+                                Log.d(TAG, "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location){
@@ -192,11 +222,15 @@ public class navAct extends AppCompatActivity
                     LatLng [] latLngs = new LatLng[10];
                     for (int i = 0; i < 10; i++) {
                         latLngs[i] = new LatLng(rlat_array[i] ,rlong_array[i]);
+                        Log.d(TAG,"rlat_array2[i]"+rlat_array[i]);
+//                        Log.d(TAG,"rlong_array2[i]"+rlong_array[i]);
                     }
                     for(int i=0;i<10;i++) {
-                        String str = item_array[i];
+                        //String str = item_array[i];
+                        String str = titem_array[i];
                         m[i] = mMap.addMarker(new MarkerOptions().position(latLngs[i]).title(str));
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs[i], 10.5f));
+                        Log.d(TAG,"titem_array[i]2"+titem_array[i]);
                     }
 /*                    LatLng [] latLngs = new LatLng[10];
                     for (int i = 0; i < 10; i++) {
@@ -234,9 +268,11 @@ public class navAct extends AppCompatActivity
                         latLngs[i] = new LatLng(rlat_array[i] ,rlong_array[i]);
                     }
                     for(int i=0;i<10;i++) {
-                        String str = item_array[i];
+                        //String str = item_array[i];
+                        String str = titem_array[i];
                         m[i] = mMap.addMarker(new MarkerOptions().position(latLngs[i]).title(str));
                         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs[i], 10.5f));
+                        Log.d(TAG,"titem_array2[i]"+titem_array[i]);
                     }
 /*                    LatLng [] latLngs = new LatLng[10];
                     for (int i = 0; i < 10; i++) {
@@ -260,6 +296,40 @@ public class navAct extends AppCompatActivity
             });
         }
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mFirestore.collection("items")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            int i =0;
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+
+
+
+                                titem_array [i] = document.getString("name");
+                                rlat_array[i] = document.getDouble("latitude");
+                                rlong_array[i] = document.getDouble("longitude");
+                                //titem_array[i] = document.;
+
+
+                                Log.d(TAG,"rlat_array[i]Start"+i+rlat_array[i]);
+                                Log.d(TAG,"rlong_array[i]Start"+i+rlong_array[i]);
+                                Log.d(TAG,"titem_array[i]Start"+i+titem_array[i]);
+                                i++;
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -188,6 +188,10 @@ public class MyItemActivity extends AppCompatActivity implements
                 Intent intent = new Intent(this,AddPhotoActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.menu_map:
+                Intent intent4 =new Intent(this,navAct.class);
+                startActivity(intent4);
+                break;
             case R.id.menu_myitem:
                 Intent intent2 = new Intent(this,MyItemActivity.class);
                 startActivity(intent2);

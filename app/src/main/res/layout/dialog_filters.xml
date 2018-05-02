@@ -67,6 +67,7 @@
             android:layout_centerVertical="true"
             android:tint="@color/greySecondary"
 
+            android:visibility="gone"
             app:srcCompat="@drawable/ic_monetization_on_white_24px" />
 
         <Spinner
@@ -75,7 +76,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/icon_price"
             android:entries="@array/prices"
-             />
+            android:visibility="gone" />
 
     </RelativeLayout>
 

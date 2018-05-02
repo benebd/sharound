@@ -25,6 +25,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -137,9 +138,17 @@ public class navAct extends AppCompatActivity
                     double longitude = location.getLongitude();
 
                     LatLng myLatLng = new LatLng(latitude,longitude);
-                    mMap.addMarker(new MarkerOptions().position(myLatLng).title("Marker in Sydney"));
+                    mMap.addMarker(new MarkerOptions().position(myLatLng).title("This is your location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(myLatLng,10.5f));
-
+                    LatLng [] latLngs = new LatLng[10];
+                    for (int i = 0; i < 10; i++) {
+                        latLngs[i] = new LatLng(rlat_array[i] ,rlong_array[i]);
+                    }
+                    for(int i=0;i<10;i++) {
+                        String str = item_array[i];
+                        m[i] = mMap.addMarker(new MarkerOptions().position(latLngs[i]).title(str));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs[i], 10.5f));
+                    }
 /*                    LatLng [] latLngs = new LatLng[10];
                     for (int i = 0; i < 10; i++) {
                         latLngs[i] = new LatLng(rlat_array[i] ,rlong_array[i]);
@@ -167,8 +176,19 @@ public class navAct extends AppCompatActivity
                     double longitude = location.getLongitude();
 
                     LatLng myLatLng = new LatLng(latitude,longitude);
-                    mMap.addMarker(new MarkerOptions().position(myLatLng).title("Marker in Sydney"));
+                    mMap.addMarker(new MarkerOptions().position(myLatLng).title("This is your location").icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN)));
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(myLatLng));
+
+
+                    LatLng [] latLngs = new LatLng[10];
+                    for (int i = 0; i < 10; i++) {
+                        latLngs[i] = new LatLng(rlat_array[i] ,rlong_array[i]);
+                    }
+                    for(int i=0;i<10;i++) {
+                        String str = item_array[i];
+                        m[i] = mMap.addMarker(new MarkerOptions().position(latLngs[i]).title(str));
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLngs[i], 10.5f));
+                    }
 /*                    LatLng [] latLngs = new LatLng[10];
                     for (int i = 0; i < 10; i++) {
                         latLngs[i] = new LatLng(rlat_array[i] ,rlong_array[i]);

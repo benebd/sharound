@@ -1,10 +1,14 @@
 package com.example.ben.myapplication;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -163,6 +167,7 @@ public class ItemDetailActivity extends AppCompatActivity
             mRestaurantRegistration.remove();
             mRestaurantRegistration = null;
         }
+        Toast.makeText(this,"hi",Toast.LENGTH_LONG);
     }
 
     @Override
@@ -219,11 +224,40 @@ public class ItemDetailActivity extends AppCompatActivity
     @OnClick(R.id.fab_show_delete)
     public void onViewClicked() {
         Log.d(TAG, "delete" + itemid);
-        mFirestore.collection("items").document(itemid).delete();
-        Toast.makeText(this, "successful delete", Toast.LENGTH_LONG);
+
+        AlertDialog.Builder builder;
+
+        builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Delete item")
+                .setMessage("Are you sure you want to delete this item?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // continue with delete
+
+//                        Intent broadcast = new Intent(Intent.ACTION_DELETE)
+//                                .putExtra("itemid", itemid);
+//
+//                       sendBroadcast(broadcast);
+//                        Intent intent = new Intent(ItemDetailActivity.this,MainActivity.class);
+//                        intent.putExtra("itemid",itemid);
+//                        startActivity(intent);
+                        mFirestore.collection("items").document(itemid).delete();
+                       // finish();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+        //mFirestore.collection("items").document(itemid).delete();
+       // Toast.makeText(this, "successful delete", Toast.LENGTH_LONG);
         //  mItemRef.document(itemid).delete();
-        DeleteDialog dialog = new DeleteDialog();
-        dialog.show(getSupportFragmentManager(), getString(R.string.dialog_change_photo));
+       // DeleteDialog dialog = new DeleteDialog();
+       // dialog.show(getSupportFragmentManager(), getString(R.string.dialog_change_photo));
     }
 
     @OnClick(R.id.fab_show_like)

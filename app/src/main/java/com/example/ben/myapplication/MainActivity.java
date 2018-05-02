@@ -1,6 +1,8 @@
 package com.example.ben.myapplication;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -51,6 +54,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.provider.LiveFolders.INTENT;
+
 public class MainActivity extends AppCompatActivity implements
         FilterDialogFragment.FilterListener,
         ItemAdapter.OnItemSelectedListener,NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private MainActivityViewModel mViewModel;
 
+    private BroadcastReceiver mBroadcastReceiver;
+    String dItemid = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +106,29 @@ public class MainActivity extends AppCompatActivity implements
                 startActivity(intent);
             }
         });
+
+
+//        mBroadcastReceiver = new BroadcastReceiver() {
+//
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                Log.d(TAG, "onReceive1:" + intent);
+//
+//
+//                switch (intent.getAction()) {
+//
+//
+//                    case Intent.ACTION_DELETE:
+//
+//                        dItemid = intent.getParcelableExtra("itemid");
+//
+//                        break;
+//                }
+//            }
+//        };
+        Log.d(TAG,"Delete"+dItemid);
+
+       // dItemid = getIntent().getExtras().getString("itemid");
         // View model
         mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
@@ -140,6 +170,8 @@ public class MainActivity extends AppCompatActivity implements
 
         // Filter Dialog
         mFilterDialog = new FilterDialogFragment();
+
+
     }
 
     @Override
@@ -159,9 +191,15 @@ public class MainActivity extends AppCompatActivity implements
         if (mAdapter != null) {
             mAdapter.startListening();
         }
+
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+        // manager.registerReceiver(mBroadcastReceiver, MyDownloadService.getIntentFilter());
+        // manager.registerReceiver(mBroadcastReceiver, MyUploadService.getIntentFilter());
+      //  manager.registerReceiver(mBroadcastReceiver, INTENT.ACTION_DELETE);
     }
 
     @Override
+
     public void onStop() {
         super.onStop();
         if (mAdapter != null) {

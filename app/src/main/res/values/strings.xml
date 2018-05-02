@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Share around</string>
+    <string name="app_name">Sharound</string>
 
 
     <string name="add_photo_title">ADD PHOTO</string>
@@ -116,7 +116,7 @@
 
     <string name="action_settings">Settings</string>
     <string name="title_activity_map">Map</string>
-    <string name="title_activity_contact_us_">contactUs_Act</string>
+    <string name="title_activity_contact_us_">Contact us</string>
     <string name="term">TERMS AND CONDITIONS
 1.	Contractual Relationship
 These Terms of Use (Terms) govern the access or use by you, an individual, from within any country in the world of applications, websites, content, products, and services (the Services) made available by Sharound., a private company established in Hong Kong, having its principal office located at 1206 Eastern Commercial Centre, 397 Hennessy Road, Wan Chai, Hong Kong (The Company)

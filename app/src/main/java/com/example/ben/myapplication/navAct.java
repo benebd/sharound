@@ -73,6 +73,7 @@ public class navAct extends AppCompatActivity
     double [] rlong_array = new double[20];
     String[] item_array = {"物品A","物品B","物品C","物品D","物品E","物品F","物品G","物品H","物品I","物品J"};
     String titem_array[] =new String[20];
+    String titem_id[]=new String[20];
 
     FirebaseFirestore mFirestore;
 
@@ -183,33 +184,6 @@ public class navAct extends AppCompatActivity
         //check the network provider is enabled
         if(locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)){
 
-            mFirestore.collection("items")
-                    .get()
-                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    Log.d(TAG, document.getId() + " => " + document.getData());
-                                    int i =0;
-
-
-                                    titem_array [i] = document.getString("name");
-                                    rlat_array[i] = document.getDouble("latitude");
-                                    rlong_array[i] = document.getDouble("longitude");
-                                    //titem_array[i] = document.;
-
-
-                                    Log.d(TAG,"rlat_array[i]Start"+i+rlat_array[i]);
-                                    Log.d(TAG,"rlong_array[i]Start"+i+rlong_array[i]);
-                                    Log.d(TAG,"titem_array[i]Start"+i+titem_array[i]);
-                                    i++;
-                                }
-                            } else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
-                            }
-                        }
-                    });
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, new LocationListener() {
                 @Override
                 public void onLocationChanged(Location location){
@@ -315,6 +289,7 @@ public class navAct extends AppCompatActivity
                                 titem_array [i] = document.getString("name");
                                 rlat_array[i] = document.getDouble("latitude");
                                 rlong_array[i] = document.getDouble("longitude");
+                                titem_id[i] = document.getId();
                                 //titem_array[i] = document.;
 
 
@@ -415,6 +390,8 @@ public class navAct extends AppCompatActivity
             @Override
             public void onInfoWindowClick(Marker arg0) {
                 Intent intent = new Intent(getBaseContext(), MainActivity.class);
+               // Intent intent = new Intent(getBaseContext(), MapItemDetailActivity.class);
+                //intent.putExtra(ItemDetailActivity.KEY_ITEM_ID, "4RAqFEtdaoyVw1zukXG0");
                 //intent.putExtra(ItemDetailActivity.KEY_ITEM, "4RAqFEtdaoyVw1zukXG0");
                 startActivity(intent);
             }

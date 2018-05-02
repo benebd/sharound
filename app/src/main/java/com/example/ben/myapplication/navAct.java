@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
@@ -15,6 +16,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,10 +31,15 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
@@ -54,6 +61,7 @@ public class navAct extends AppCompatActivity
     private MainActivityViewModel mViewModel ;
     private static final int RC_SIGN_IN = 9001;
 
+    private final String TAG = "navAct";
 
     double latitudeMin = 22.3;
     double latitudeMax = 22.5;
@@ -65,7 +73,7 @@ public class navAct extends AppCompatActivity
     double [] rlong_array = new double[10];
     String[] item_array = {"物品A","物品B","物品C","物品D","物品E","物品F","物品G","物品H","物品I","物品J"};
 
-    private FirebaseFirestore mFirestore;
+    FirebaseFirestore mFirestore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,21 +85,62 @@ public class navAct extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
+       // mFirestore.collection("items").addSnapshotListener(new EventListener<QuerySnapshot>()
         mFirestore = FirebaseFirestore.getInstance();
-        mFirestore.collection("items").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
-                for (DocumentChange dc: queryDocumentSnapshots.getDocumentChanges()){
-                    if(dc.getType()== DocumentChange.Type.ADDED){
-                        int i = 0;
-                        rlat_array[i] = dc.getDocument().getDouble("latitude");
-                        rlong_array[i] = dc.getDocument().getDouble("longitude");
-                        i++;
+       // DocumentReference docRef = mFirestore.collection("items");
+        String id [] =new String[10];
+        //id = mFirestore.collection("items").document().getId();
+        //Log.d(TAG,"tid"+id);
+        //ApiFuture<DocumentSnapshot> future =docRef.get();
+
+        mFirestore.collection("items")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                int i =0;
+
+                                String titem_array[] =new String[10];
+                                titem_array [i] = document.getString("name");
+                                rlat_array[i] = document.getDouble("latitude");
+                                rlong_array[i] = document.getDouble("longitude");
+                                //titem_array[i] = document.;
+
+
+                                Log.d(TAG,"rlat_array[i]"+rlat_array[i]);
+                                Log.d(TAG,"rlong_array[i]"+rlong_array[i]);
+                                Log.d(TAG,"titem_array[i]"+titem_array[i]);
+                                i++;
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
                     }
-                }
-            }
-        });
+                });
+
+//        mFirestore.collection("items").addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+//                for (DocumentChange dc: queryDocumentSnapshots.getDocumentChanges()){
+//                    if(dc.getType()== DocumentChange.Type.ADDED){
+//                        int i = 0;
+//                        rlat_array[i] = dc.getDocument().getDouble("latitude");
+//                        rlong_array[i] = dc.getDocument().getDouble("longitude");
+//                        String titem_array[] =new String[10];
+//                        titem_array[i] = dc.getDocument().getString("name");
+//                        i++;
+//                        Log.d(TAG,"rlat_array[i]"+rlat_array[i]);
+//                        Log.d(TAG,"rlong_array[i]"+rlong_array[i]);
+//                        Log.d(TAG,"titem_array[i]"+titem_array[i]);
+//
+//                    }
+//                }
+//            }
+//        });
+
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -29,6 +29,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
+
+
 
 import java.util.Collections;
 import java.util.Random;
@@ -56,6 +64,8 @@ public class navAct extends AppCompatActivity
     double [] rlong_array = new double[10];
     String[] item_array = {"物品A","物品B","物品C","物品D","物品E","物品F","物品G","物品H","物品I","物品J"};
 
+    private FirebaseFirestore mFirestore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +76,21 @@ public class navAct extends AppCompatActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
+        mFirestore = FirebaseFirestore.getInstance();
+        mFirestore.collection("items").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+                for (DocumentChange dc: queryDocumentSnapshots.getDocumentChanges()){
+                    if(dc.getType()== DocumentChange.Type.ADDED){
+                        int i = 0;
+                        rlat_array[i] = dc.getDocument().getDouble("latitude");
+                        rlong_array[i] = dc.getDocument().getDouble("longitude");
+                        i++;
+                    }
+                }
+            }
+        });
         FloatingActionButton refresh = (FloatingActionButton) findViewById(R.id.refresh);
         refresh.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,7 +122,7 @@ public class navAct extends AppCompatActivity
 
         mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
-        genLocation();
+       // genLocation();
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -193,6 +218,19 @@ public class navAct extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
+
+//    @Override
+//    public void onEvent(QuerySnapshot queryDocumentSnapshots, FirebaseFirestoreException e) {
+//        for (DocumentChange dc: queryDocumentSnapshots.getDocumentChanges()){
+//            if(dc.getType()== DocumentChange.Type.ADDED){
+//                int i = 0;
+//                rlat_array[i] = dc.getDocument().getDouble("latitude");
+//                rlong_array[i] = dc.getDocument().getDouble("longitude");
+//                i++;
+//            }
+//        }
+//    }
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

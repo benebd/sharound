@@ -10,6 +10,7 @@ public class Item {
     public static final String FIELD_PRICE = "price";
     public static final String FIELD_POPULARITY = "numRatings";
     public static final String FIELD_AVG_RATING = "avgRating";
+    public static final String FIELD_TIME ="timestamp";
 
     private String name;
     private String location;
@@ -21,11 +22,15 @@ public class Item {
     private String userid;
     private String username;
     private @ServerTimestamp Date timestamp;
-
+    private double latitude;
+    private double longitude;
     public Item() {}
 
-    public Item(String name, String location, String category, String photo,
-                int price, int numRatings, double avgRating,FirebaseUser user) {
+
+
+    public Item(String name, String location, String category,
+                String photo, int price, int numRatings, double avgRating, String userid,
+                String username, Date timestamp, double latitude, double longitude) {
         this.name = name;
         this.location = location;
         this.category = category;
@@ -33,10 +38,12 @@ public class Item {
         this.price = price;
         this.numRatings = numRatings;
         this.avgRating = avgRating;
-        this.userid = user.getUid();
-        this.username = user.getEmail();
+        this.userid = userid;
+        this.username = username;
+        this.timestamp = timestamp;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
-
 
     public String getUserid() {
         return userid;
@@ -118,4 +125,19 @@ public class Item {
         this.avgRating = avgRating;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 }

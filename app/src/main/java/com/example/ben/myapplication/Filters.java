@@ -22,7 +22,7 @@ public class Filters {
 
     public static Filters getDefault() {
         Filters filters = new Filters();
-        filters.setSortBy(Item.FIELD_AVG_RATING);
+        filters.setSortBy(Item.FIELD_TIME);
         filters.setSortDirection(Query.Direction.DESCENDING);
 
         return filters;

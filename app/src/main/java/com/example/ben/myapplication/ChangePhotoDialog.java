@@ -98,10 +98,7 @@ public class ChangePhotoDialog extends DialogFragment {
             //Uri selectedImageUri = data.getData();
            // Log.d(TAG, "onActivityResult: image: " + selectedImageUri);
             mOnPhotoReceived.getImageBitmap(uriimage);
-            //Bitmap bitmap;
-            //bitmap = (Bitmap) data.getExtras().get("data");
 
-            //mOnPhotoReceived.getImageBitmap(bitmap);
             getDialog().dismiss();
         }
     }

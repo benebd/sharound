@@ -27,8 +27,7 @@ public class MyUploadService extends MyBaseTaskService {
     public static final String ACTION_UPLOAD = "action_upload";
     public static final String UPLOAD_COMPLETED = "upload_completed";
     public static final String UPLOAD_ERROR = "upload_error";
-    public static final String BROADCAST_ACTION =
-            "net.macdidi.broadcast01.action.MYBROADCAST01";
+
     /** Intent Extras **/
     public static final String EXTRA_FILE_URI = "extra_file_uri";
     public static final String EXTRA_DOWNLOAD_URL = "extra_download_url";
@@ -130,18 +129,18 @@ public class MyUploadService extends MyBaseTaskService {
         boolean success = downloadUrl != null;
         Log.w(TAG, "intent"+ downloadUrl);
         String action = success ? UPLOAD_COMPLETED : UPLOAD_ERROR;
-        Intent intent = new Intent();
+       /* Intent intent = new Intent();
         intent.setAction("intent.setAction");
         intent.putExtra(EXTRA_DOWNLOAD_URL, downloadUrl)
                 .putExtra(EXTRA_FILE_URI, fileUri);
         return LocalBroadcastManager.getInstance(getApplicationContext())
                 .sendBroadcast(intent);
-
-       /* Intent broadcast = new Intent(action)
+*/
+        Intent broadcast = new Intent(action)
                 .putExtra(EXTRA_DOWNLOAD_URL, downloadUrl)
                 .putExtra(EXTRA_FILE_URI, fileUri);
         return LocalBroadcastManager.getInstance(getApplicationContext())
-                .sendBroadcast(broadcast);*/
+                .sendBroadcast(broadcast);
     }
 
     /**
@@ -152,21 +151,21 @@ public class MyUploadService extends MyBaseTaskService {
         dismissProgressNotification();
 
         // Make Intent to MainActivity
-       /* Intent intent = new Intent(this, Main2Activity.class)
+        Intent intent = new Intent(this, AddPhotoActivity.class)
                 .putExtra(EXTRA_DOWNLOAD_URL, downloadUrl)
                 .putExtra(EXTRA_FILE_URI, fileUri)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);*/
+                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         boolean success = downloadUrl != null;
         String caption = success ? getString(R.string.upload_success) : getString(R.string.upload_failure);
-       // showFinishedNotification(caption, intent, success);
+        showFinishedNotification(caption, intent, success);
     }
 
     public static IntentFilter getIntentFilter() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(UPLOAD_COMPLETED);
         filter.addAction(UPLOAD_ERROR);
-
+      //  filter.addAction("test");
         return filter;
     }
 

@@ -2,15 +2,27 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+
+
+    <item
+        android:id="@+id/menu_all_item"
+        android:title="All Item"/>
+
+    <item
+        android:id="@+id/menu_myitem"
+
+        android:title="Added Item" />
+
+    <item
+        android:id="@+id/menu_want_items"
+        android:title="Wish List" />
+    <item
+        android:id="@+id/menu_map"
+        android:title="Map" />
+
     <item
         android:id="@+id/menu_sign_out"
         android:title="@string/sign_out" />
 
-    <item
-        android:id="@+id/menu_add_items"
-        android:title="@string/add_random_items" />
-    <item
-        android:id="@+id/add"
-        android:title="Item" />
 
 </menu>

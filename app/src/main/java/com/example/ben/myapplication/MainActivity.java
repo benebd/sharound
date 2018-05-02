@@ -1,13 +1,20 @@
 package com.example.ben.myapplication;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -47,9 +54,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+import static android.provider.LiveFolders.INTENT;
+
 public class MainActivity extends AppCompatActivity implements
         FilterDialogFragment.FilterListener,
-        ItemAdapter.OnItemSelectedListener {
+        ItemAdapter.OnItemSelectedListener,NavigationView.OnNavigationItemSelectedListener {
 
     private static final String TAG = "MainActivity";
 
@@ -80,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements
 
     private MainActivityViewModel mViewModel;
 
+    private BroadcastReceiver mBroadcastReceiver;
+    String dItemid = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,13 +98,37 @@ public class MainActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         setSupportActionBar(mToolbar);
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this,AddPhotoActivity.class);
                 startActivity(intent);
             }
         });
+
+
+//        mBroadcastReceiver = new BroadcastReceiver() {
+//
+//            @Override
+//            public void onReceive(Context context, Intent intent) {
+//                Log.d(TAG, "onReceive1:" + intent);
+//
+//
+//                switch (intent.getAction()) {
+//
+//
+//                    case Intent.ACTION_DELETE:
+//
+//                        dItemid = intent.getParcelableExtra("itemid");
+//
+//                        break;
+//                }
+//            }
+//        };
+        Log.d(TAG,"Delete"+dItemid);
+
+       // dItemid = getIntent().getExtras().getString("itemid");
         // View model
         mViewModel = ViewModelProviders.of(this).get(MainActivityViewModel.class);
 
@@ -103,9 +138,9 @@ public class MainActivity extends AppCompatActivity implements
         // Firestore
         mFirestore = FirebaseFirestore.getInstance();
 
-        // Get ${LIMIT} restaurants
+        // Get ${LIMIT} item
         mQuery = mFirestore.collection("items")
-                .orderBy("avgRating", Query.Direction.DESCENDING)
+                .orderBy("timestamp", Query.Direction.DESCENDING)
                 .limit(LIMIT);
 
         // RecyclerView
@@ -135,6 +170,8 @@ public class MainActivity extends AppCompatActivity implements
 
         // Filter Dialog
         mFilterDialog = new FilterDialogFragment();
+
+
     }
 
     @Override
@@ -154,9 +191,15 @@ public class MainActivity extends AppCompatActivity implements
         if (mAdapter != null) {
             mAdapter.startListening();
         }
+
+        LocalBroadcastManager manager = LocalBroadcastManager.getInstance(this);
+        // manager.registerReceiver(mBroadcastReceiver, MyDownloadService.getIntentFilter());
+        // manager.registerReceiver(mBroadcastReceiver, MyUploadService.getIntentFilter());
+      //  manager.registerReceiver(mBroadcastReceiver, INTENT.ACTION_DELETE);
     }
 
     @Override
+
     public void onStop() {
         super.onStop();
         if (mAdapter != null) {
@@ -173,17 +216,28 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.menu_add_items:
-                onAddItemsClicked();
+
+            case R.id.menu_want_items:
+               // onAddItemsClicked();
+                Intent intent1 = new Intent(MainActivity.this,LikeItemActivity.class);
+                startActivity(intent1);
                 break;
             case R.id.menu_sign_out:
                 AuthUI.getInstance().signOut(this);
                 startSignIn();
                 break;
             case R.id.add:
-                Intent intent = new Intent(MainActivity.this,Main2Activity.class);
+                Intent intent = new Intent(MainActivity.this,AddPhotoActivity.class);
                 startActivity(intent);
                 break;
+
+            case R.id.menu_map:
+                Intent intent3 =new Intent(this,navAct.class);
+                startActivity(intent3);
+                break;
+            case R.id.menu_myitem:
+                Intent intent2 = new Intent(this,MyItemActivity.class);
+                startActivity(intent2);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -224,9 +278,12 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public void onItemSelected(DocumentSnapshot restaurant) {
         // Go to the details page for the selected restaurant
-        Intent intent = new Intent(this, RestaurantDetailActivity.class);
-        intent.putExtra(RestaurantDetailActivity.KEY_RESTAURANT_ID, restaurant.getId());
-
+        Intent intent = new Intent(this, ItemDetailActivity.class);
+        intent.putExtra(ItemDetailActivity.KEY_ITEM_ID, restaurant.getId());
+       intent.putExtra(ItemDetailActivity.KEY_ITEM_UID,restaurant.getString("userid"));
+      // intent.putExtra(ItemDetailActivity.KEY_ITEM,restaurant.getData());
+       String testid =restaurant.getString("userid");
+       Log.d(TAG,"OnitemSeclet"+testid);
         startActivity(intent);
         overridePendingTransition(R.anim.slide_in_from_right, R.anim.slide_out_to_left);
     }
@@ -337,5 +394,34 @@ public class MainActivity extends AppCompatActivity implements
                 }).create();
 
         dialog.show();
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            if (shouldStartSignIn()) {
+                startSignIn();
+            }else{
+                Intent intent = new Intent(this,AddPhotoActivity.class);
+                startActivity(intent);
+            }
+        }
+        else if (id == R.id.nav_gallery) {
+            Intent intent = new Intent(this,MainActivity.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_slideshow) {
+            Intent intent = new Intent(this,navAct.class);
+            startActivity(intent);
+        }
+        else if (id == R.id.nav_manage) {}
+        else if (id == R.id.nav_share) {}
+        else if (id == R.id.nav_send) {}
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }
